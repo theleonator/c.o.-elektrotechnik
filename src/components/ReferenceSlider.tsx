@@ -8,9 +8,9 @@ interface RefImage {
 
 export default function ReferenceSlider() {
   const images: RefImage[] = [
-    { src: "/industrieslider.jpg", alt: "Industrieinstallation" },
-    { src: "/neubauslider.jpg", alt: "Neubau" },
-    { src: "/sanierungslider.jpg", alt: "Sanierung" },
+    { src: "/industrieslider.jpg", alt: "Industrieinstallation", text: "Industrieinstallation" },
+    { src: "/neubauslider.jpg", alt: "Neubau", text: "Neubau" },
+    { src: "/sanierungslider.jpg", alt: "Sanierung", text: "Sanierung" },
   ];
 
   const [current, setCurrent] = useState<number>(0);
