@@ -39,7 +39,7 @@ export default function ReferenceSlider() {
             alt={img.alt}
             className={`
               absolute inset-0 w-full h-full object-cover
-              transition-opacity duration-700 ease-in-out
+              transition-opacity duration-1000 ease-in-out
               ${idx === current ? "opacity-100" : "opacity-0"}
             `}
           />
