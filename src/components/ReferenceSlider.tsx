@@ -49,7 +49,7 @@ export default function ReferenceSlider() {
       {/* Linker Pfeil */}
       <button
         onClick={prevSlide}
-        className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 text-white p-3 rounded-full hover:bg-black/60 transition"
+        className="absolute left-4 top-1/2 -translate-y-1/2 bg-red-600 text-white w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:bg-red-700 transition"
         aria-label="Vorheriges Bild"
       >
         ❮
@@ -58,7 +58,7 @@ export default function ReferenceSlider() {
       {/* Rechter Pfeil */}
       <button
         onClick={nextSlide}
-        className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 text-white p-3 rounded-full hover:bg-black/60 transition"
+        className="absolute right-4 top-1/2 -translate-y-1/2 bg-red-600 text-white w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:bg-red-700 transition"
         aria-label="Nächstes Bild"
       >
         ❯
