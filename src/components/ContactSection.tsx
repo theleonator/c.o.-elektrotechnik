@@ -149,12 +149,12 @@ const ContactSection = () => {
             </div>
 
             {/* Map placeholder */}
-            <div className="bg-card border border-border rounded-lg h-48 flex items-center justify-center">
-              <div className="text-center text-muted-foreground">
-                <MapPin className="w-8 h-8 mx-auto mb-2 opacity-40" />
-                <p className="text-sm">Google Maps Kartenansicht</p>
-              </div>
-            </div>
+            
+
+
+
+
+            
           </motion.div>
         </div>
       </div>
