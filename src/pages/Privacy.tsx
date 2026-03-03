@@ -20,8 +20,6 @@ export default function Privacy() {
           Weitere Informationen zu deiner Datenschutzrichtlinie...
         </p>
       </section>
-
-      {/* weitere Sections */}
     </div>
   );
 }
