@@ -23,8 +23,8 @@ const HeroSection = () => {
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
+            transition={{ duration: 0.8, ease: "easeOut" }}>
+            
             <div className="flex items-center gap-2 mb-6">
               <div className="w-8 h-0.5 bg-primary" />
               <span className="text-xs uppercase tracking-[0.3em] text-primary font-heading font-semibold">
@@ -38,8 +38,8 @@ const HeroSection = () => {
               & Industrieprojekte
             </h1>
 
-            <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-lg leading-relaxed">
-              C.O. Elektrotechnik – zuverlässig, sicher, präzise. Wir bringen Strom in Ihr Projekt.
+            <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-lg leading-relaxed">C.O. Elektrotechnik – zuverlässig, sicher, präzise. 
+Wir bringen Strom in Ihr Projekt.
             </p>
           </motion.div>
 
@@ -47,13 +47,13 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-4"
-          >
+            className="flex flex-col sm:flex-row gap-4">
+            
             <Button
               onClick={scrollToContact}
               size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold text-base px-8 py-6 glow-red"
-            >
+              className="bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold text-base px-8 py-6 glow-red">
+              
               Jetzt Kontakt aufnehmen
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
@@ -61,8 +61,8 @@ const HeroSection = () => {
               onClick={() => document.querySelector("#leistungen")?.scrollIntoView({ behavior: "smooth" })}
               variant="outline"
               size="lg"
-              className="border-border text-foreground hover:bg-secondary font-heading font-semibold text-base px-8 py-6"
-            >
+              className="border-border text-foreground hover:bg-secondary font-heading font-semibold text-base px-8 py-6">
+              
               Unsere Leistungen
             </Button>
           </motion.div>
@@ -73,14 +73,14 @@ const HeroSection = () => {
       <motion.div
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
         animate={{ y: [0, 10, 0] }}
-        transition={{ repeat: Infinity, duration: 2 }}
-      >
+        transition={{ repeat: Infinity, duration: 2 }}>
+        
         <div className="w-6 h-10 border-2 border-muted-foreground/30 rounded-full flex justify-center pt-2">
           <div className="w-1 h-2 bg-primary rounded-full" />
         </div>
       </motion.div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default HeroSection;
