@@ -10,9 +10,9 @@ const Footer = () => {
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-                <Zap className="w-5 h-5 text-primary-foreground" />
-              </div>
+              
+
+              
               <span className="font-heading font-bold text-foreground">C.O. Elektrotechnik</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
