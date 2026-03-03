@@ -66,7 +66,7 @@ const Footer = () => {
           </p>
           <div className="flex gap-6 text-xs text-muted-foreground">
             <a href="impressum" className="hover:text-primary transition-colors">Impressum</a>
-            <a href="/datenschutz" className="hover:text-primary transition-colors">Datenschutz</a>
+            <a href="datenschutz" className="hover:text-primary transition-colors">Datenschutz</a>
           </div>
         </div>
       </div>
