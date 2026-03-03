@@ -36,13 +36,13 @@ const Footer = () => {
           <div>
             <h4 className="font-heading font-semibold text-foreground mb-4">Kontakt</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>Musterstraße 12</li>
-              <li>12345 Musterstadt</li>
+              <li>Obere Weinbergstraße 27</li>
+              <li>65326 Aarbergen</li>
               <li className="pt-1">
-                <a href="tel:+491234567890" className="hover:text-primary transition-colors">+49 123 456 7890</a>
+                <a className="hover:text-primary transition-colors" href="tel:+491517571992">+49 151 57571992</a>
               </li>
               <li>
-                <a href="mailto:info@c-o-elektrotechnik.de" className="hover:text-primary transition-colors">info@c-o-elektrotechnik.de</a>
+                <a className="hover:text-primary transition-colors" href="mailto:mail@c-o-elektrotechnik.de">mail@c-o-elektrotechnik.de</a>
               </li>
             </ul>
           </div>
@@ -51,9 +51,10 @@ const Footer = () => {
           <div>
             <h4 className="font-heading font-semibold text-foreground mb-4">Öffnungszeiten</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>Mo – Fr: 07:00 – 17:00</li>
-              <li>Sa: nach Vereinbarung</li>
-              <li>So: geschlossen</li>
+              <li>Mo – Fr: 07:00 – 18:00</li>
+              <li>Sa & So: nach Vereinbarung</li>
+              <li>
+</li>
             </ul>
           </div>
         </div>
@@ -69,8 +70,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>);
 };
 
 export default Footer;
