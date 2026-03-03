@@ -65,13 +65,13 @@ export default function ReferenceSlider() {
       </button>
 
       {/* Dots */}
-      <div className="flex justify-center gap-2 mt-4">
+      <div className="flex justify-center gap-3 mt-4">
         {images.map((_, idx) => (
           <button
             key={idx}
             onClick={() => setCurrent(idx)}
-            className={`w-3 h-3 rounded-full transition ${
-              idx === current ? "bg-red-600" : "bg-gray-300"
+            className={`w-4 h-4 rounded-full transition all ${
+              idx === current ? "bg-red-600 scale-110 shadow-md" : "bg-gray-300 hover:bg-red-400"
             }`}
             aria-label={`Bild ${idx + 1}`}
           />
