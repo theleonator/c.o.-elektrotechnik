@@ -143,8 +143,7 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Adresse</p>
-                  <p className="text-foreground font-medium">Obere Weinbergstraße 27
-65326 Aarbergen<br />12345 Musterstadt</p>
+                  <p className="text-foreground font-medium">Obere Weinbergstraße 27<br />65326 Aarbergen</p>
                 </div>
               </div>
             </div>
