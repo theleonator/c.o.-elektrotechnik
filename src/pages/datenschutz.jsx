@@ -1,4 +1,4 @@
-export default function Datenschutz() {
+export default function datenschutz() {
   return (
     <main style={{ maxWidth: "800px", margin: "40px auto", padding: "20px" }}>
       <h1>Datenschutzerklärung</h1>
