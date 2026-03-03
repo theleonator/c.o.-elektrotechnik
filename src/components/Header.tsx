@@ -24,9 +24,6 @@ const Header = () => {
       <div className="container mx-auto flex items-center justify-between h-16 md:h-20 px-4">
         {/* Logo */}
         <button onClick={() => scrollTo("#hero")} className="flex items-center gap-3 group">
-          <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary flex items-center justify-center glow-red transition-transform group-hover:scale-105">
-            <Zap className="w-5 h-5 md:w-6 md:h-6 text-primary-foreground" />
-          </div>
           <div className="flex flex-col leading-tight">
             <span className="font-heading font-bold text-sm text-foreground tracking-tight text-left md:text-xl">C.O. Elektrotechnik</span>
             <span className="text-[10px] text-muted-foreground tracking-widest uppercase text-left md:text-sm">M.E. ​CHRISTOPHER OTT</span>
