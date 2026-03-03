@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Menu, X, Zap } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
+import logo from "@/assets/Logo_C-O-E.png";
 
 const navLinks = [
 { label: "Startseite", href: "#hero" },
@@ -24,6 +25,7 @@ const Header = () => {
       <div className="container mx-auto flex items-center justify-between h-16 md:h-20 px-4">
         {/* Logo */}
         <button onClick={() => scrollTo("#hero")} className="flex items-center gap-3 group">
+          <img src={logo} alt="C.O. Elektrotechnik Logo" className="h-10 w-10 md:h-12 md:w-12 rounded-full object-contain" />
           <div className="flex flex-col leading-tight">
             <span className="font-heading font-bold text-sm text-foreground tracking-tight text-left md:text-xl">C.O. Elektrotechnik</span>
             <span className="text-[10px] text-muted-foreground tracking-widest uppercase text-left md:text-sm">M.E. ​CHRISTOPHER OTT</span>
