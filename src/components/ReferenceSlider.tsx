@@ -15,11 +15,11 @@ export default function ReferenceSlider() {
 
   const [current, setCurrent] = useState<number>(0);
 
-  // Autoplay alle 4 Sekunden
+  // Autoplay alle 8 Sekunden
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % images.length);
-    }, 4000);
+    }, 8000); // 8 Sekunden
 
     return () => clearInterval(interval);
   }, [images.length]);
