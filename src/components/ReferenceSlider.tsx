@@ -3,14 +3,14 @@ import { useState, useEffect } from "react";
 interface RefImage {
   src: string;
   alt: string;
-  text?: string;
+  label: string;
 }
 
 export default function ReferenceSlider() {
   const images: RefImage[] = [
-    { src: "/industrieslider.jpg", alt: "Industrieinstallation", text: "Industrieinstallation" },
-    { src: "/neubauslider.jpg", alt: "Neubau", text: "Neubau" },
-    { src: "/sanierungslider.jpg", alt: "Sanierung", text: "Sanierung" },
+    { src: "/ref1.jpg", alt: "Industriebaustelle", label: "Industriebaustelle" },
+    { src: "/ref2.jpg", alt: "Neubauinstallation", label: "Neubauinstallation" },
+    { src: "/ref3.jpg", alt: "Altbausanierung", label: "Altbausanierung" },
   ];
 
   const [current, setCurrent] = useState<number>(0);
@@ -24,22 +24,17 @@ export default function ReferenceSlider() {
     return () => clearInterval(interval);
   }, [images.length]);
 
-  const nextSlide = () => {
-    setCurrent((prev) => (prev + 1) % images.length);
-  };
-
-  const prevSlide = () => {
-    setCurrent((prev) => (prev - 1 + images.length) % images.length);
-  };
+  const nextSlide = () => setCurrent((prev) => (prev + 1) % images.length);
+  const prevSlide = () => setCurrent((prev) => (prev - 1 + images.length) % images.length);
 
   return (
-    <div className="relative w-full max-w-3xl mx-auto mt-10">
+    <div className="relative w-full max-w-4xl mx-auto mt-10">
       {/* Bild */}
       <div className="overflow-hidden rounded-xl shadow-lg">
         <img
           src={images[current].src}
           alt={images[current].alt}
-          className="w-full h-80 object-cover transition-all duration-500"
+          className="w-full h-80 md:h-[420px] object-cover transition-all duration-500"
         />
       </div>
 
@@ -71,16 +66,15 @@ export default function ReferenceSlider() {
               idx === current ? "bg-red-600" : "bg-gray-300"
             }`}
             aria-label={`Bild ${idx + 1}`}
-          ></button>
+          />
         ))}
       </div>
 
-      {/* Optional: Text */}
-      {images[current].text && (
-        <p className="text-center mt-4 text-gray-600">
-          {images[current].text}
-        </p>
-      )}
+      {/* Beschreibung pro Bild */}
+      <p className="text-center mt-6 text-lg font-medium text-gray-700">
+        {images[current].label}
+      </p>
     </div>
   );
 }
+``
