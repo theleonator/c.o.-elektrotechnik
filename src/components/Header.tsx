@@ -28,7 +28,7 @@ const Header = () => {
             <Zap className="w-5 h-5 md:w-6 md:h-6 text-primary-foreground" />
           </div>
           <div className="flex flex-col leading-tight">
-            <span className="font-heading font-bold text-sm md:text-base text-foreground tracking-tight">C.O. Elektrotechnik</span>
+            <span className="font-heading font-bold text-sm text-foreground tracking-tight text-left md:text-xl">C.O. Elektrotechnik</span>
             <span className="text-[10px] md:text-xs text-muted-foreground tracking-widest uppercase">M.E. ​CHRISTOPHER OTT</span>
           </div>
         </button>
