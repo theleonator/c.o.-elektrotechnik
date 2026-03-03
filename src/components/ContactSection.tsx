@@ -120,7 +120,7 @@ const ContactSection = () => {
                 <div>
                   <p className="text-sm text-muted-foreground">Telefon</p>
                   <a className="text-foreground font-medium hover:text-primary transition-colors" href="tel:+4915157571992">
-                    +49 15157571992
+                    +49 123 456 7890
                   </a>
                 </div>
               </div>
@@ -131,8 +131,8 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">E-Mail</p>
-                  <a href="mailto:info@c-o-elektrotechnik.de" className="text-foreground font-medium hover:text-primary transition-colors">
-                    info@c-o-elektrotechnik.de
+                  <a className="text-foreground font-medium hover:text-primary transition-colors" href="mailto:mail@c-o-elektrotechnik.de">
+                    mail@c-o-elektrotechnik.de
                   </a>
                 </div>
               </div>
@@ -143,7 +143,8 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Adresse</p>
-                  <p className="text-foreground font-medium">Musterstraße 12<br />12345 Musterstadt</p>
+                  <p className="text-foreground font-medium">Obere Weinbergstraße 27
+65326 Aarbergen<br />12345 Musterstadt</p>
                 </div>
               </div>
             </div>
@@ -159,7 +160,6 @@ const ContactSection = () => {
         </div>
       </div>
     </section>);
-
 };
 
 export default ContactSection;
