@@ -29,7 +29,7 @@ const Header = () => {
           </div>
           <div className="flex flex-col leading-tight">
             <span className="font-heading font-bold text-sm md:text-base text-foreground tracking-tight">C.O. Elektrotechnik</span>
-            <span className="text-[10px] md:text-xs text-muted-foreground tracking-widest uppercase">​CHRISTOPHER OTT</span>
+            <span className="text-[10px] md:text-xs text-muted-foreground tracking-widest uppercase">M.E. ​CHRISTOPHER OTT</span>
           </div>
         </button>
 
