@@ -19,7 +19,7 @@ export default function ReferenceSlider() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % images.length);
-    }, 8000); // 8 Sekunden
+    }, 8000);
 
     return () => clearInterval(interval);
   }, [images.length]);
@@ -29,13 +29,21 @@ export default function ReferenceSlider() {
 
   return (
     <div className="relative w-full max-w-4xl mx-auto mt-10">
-      {/* Bild */}
-      <div className="overflow-hidden rounded-xl shadow-lg">
-        <img
-          src={images[current].src}
-          alt={images[current].alt}
-          className="w-full h-80 md:h-[420px] object-cover transition-all duration-500"
-        />
+
+      {/* Bild-Container mit Fade */}
+      <div className="relative h-80 md:h-[420px] overflow-hidden rounded-xl shadow-lg bg-black">
+        {images.map((img, idx) => (
+          <img
+            key={img.src}
+            src={img.src}
+            alt={img.alt}
+            className={`
+              absolute inset-0 w-full h-full object-cover
+              transition-opacity duration-700 ease-in-out
+              ${idx === current ? "opacity-100" : "opacity-0"}
+            `}
+          />
+        ))}
       </div>
 
       {/* Linker Pfeil */}
@@ -70,11 +78,10 @@ export default function ReferenceSlider() {
         ))}
       </div>
 
-      {/* Beschreibung pro Bild */}
-      <p className="text-center mt-6 text-lg font-medium text-gray-700">
+      {/* Weißer Text unter dem Slider */}
+      <p className="text-center mt-6 text-lg font-semibold text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]">
         {images[current].label}
       </p>
     </div>
   );
 }
-``
