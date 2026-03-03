@@ -30,8 +30,8 @@ const ContactSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
+          className="text-center mb-16">
+          
           <div className="flex items-center justify-center gap-3 mb-4">
             <div className="w-8 h-0.5 bg-primary" />
             <span className="text-xs uppercase tracking-[0.3em] text-primary font-heading font-semibold">
@@ -53,8 +53,8 @@ const ContactSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="lg:col-span-3 space-y-5"
-          >
+            className="lg:col-span-3 space-y-5">
+            
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
                 <label className="text-sm font-medium text-foreground mb-1.5 block">Name *</label>
@@ -75,8 +75,8 @@ const ContactSection = () => {
                 placeholder="Beschreiben Sie kurz Ihr Projekt oder Anliegen..."
                 rows={5}
                 required
-                className="bg-card border-border text-foreground placeholder:text-muted-foreground resize-none"
-              />
+                className="bg-card border-border text-foreground placeholder:text-muted-foreground resize-none" />
+              
             </div>
 
             <div className="flex items-start gap-3">
@@ -84,8 +84,8 @@ const ContactSection = () => {
                 id="privacy"
                 checked={agreed}
                 onCheckedChange={(v) => setAgreed(v === true)}
-                className="mt-0.5 border-muted-foreground data-[state=checked]:bg-primary data-[state=checked]:border-primary"
-              />
+                className="mt-0.5 border-muted-foreground data-[state=checked]:bg-primary data-[state=checked]:border-primary" />
+              
               <label htmlFor="privacy" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
                 Ich stimme der Verarbeitung meiner Daten gemäß der{" "}
                 <a href="#datenschutz" className="text-primary hover:underline">Datenschutzerklärung</a> zu. *
@@ -95,8 +95,8 @@ const ContactSection = () => {
             <Button
               type="submit"
               size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold px-8 py-6 glow-red"
-            >
+              className="bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold px-8 py-6 glow-red">
+              
               <Send className="w-4 h-4 mr-2" />
               Nachricht senden
             </Button>
@@ -108,8 +108,8 @@ const ContactSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="lg:col-span-2 space-y-6"
-          >
+            className="lg:col-span-2 space-y-6">
+            
             <div className="bg-card border border-border rounded-lg p-6 space-y-6">
               <h3 className="font-heading font-semibold text-lg text-foreground">Kontaktdaten</h3>
 
@@ -119,7 +119,7 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Telefon</p>
-                  <a href="tel:+491234567890" className="text-foreground font-medium hover:text-primary transition-colors">
+                  <a className="text-foreground font-medium hover:text-primary transition-colors" href="tel:+4915157571992">
                     +49 123 456 7890
                   </a>
                 </div>
@@ -158,8 +158,8 @@ const ContactSection = () => {
           </motion.div>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default ContactSection;

@@ -4,11 +4,11 @@ import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
-  { label: "Startseite", href: "#hero" },
-  { label: "Leistungen", href: "#leistungen" },
-  { label: "Über uns", href: "#ueber-uns" },
-  { label: "Kontakt", href: "#kontakt" },
-];
+{ label: "Startseite", href: "#hero" },
+{ label: "Leistungen", href: "#leistungen" },
+{ label: "Über uns", href: "#ueber-uns" },
+{ label: "Kontakt", href: "#kontakt" }];
+
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -29,22 +29,22 @@ const Header = () => {
           </div>
           <div className="flex flex-col leading-tight">
             <span className="font-heading font-bold text-sm md:text-base text-foreground tracking-tight">C.O. Elektrotechnik</span>
-            <span className="text-[10px] md:text-xs text-muted-foreground tracking-widest uppercase">Elektrohandwerk</span>
+            <span className="text-[10px] md:text-xs text-muted-foreground tracking-widest uppercase">​CHRISTOPHER OTT</span>
           </div>
         </button>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <button
-              key={link.href}
-              onClick={() => scrollTo(link.href)}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors relative group"
-            >
+          {navLinks.map((link) =>
+          <button
+            key={link.href}
+            onClick={() => scrollTo(link.href)}
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors relative group">
+            
               {link.label}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full" />
             </button>
-          ))}
+          )}
           <Button onClick={() => scrollTo("#kontakt")} size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold">
             Angebot anfragen
           </Button>
@@ -54,40 +54,40 @@ const Header = () => {
         <button
           className="md:hidden text-foreground"
           onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Menü öffnen"
-        >
+          aria-label="Menü öffnen">
+          
           {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
 
       {/* Mobile Nav */}
       <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-background border-b border-border overflow-hidden"
-          >
+        {mobileOpen &&
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          exit={{ opacity: 0, height: 0 }}
+          className="md:hidden bg-background border-b border-border overflow-hidden">
+          
             <nav className="flex flex-col p-4 gap-3">
-              {navLinks.map((link) => (
-                <button
-                  key={link.href}
-                  onClick={() => scrollTo(link.href)}
-                  className="text-left text-sm font-medium text-muted-foreground hover:text-foreground py-2 border-b border-border transition-colors"
-                >
+              {navLinks.map((link) =>
+            <button
+              key={link.href}
+              onClick={() => scrollTo(link.href)}
+              className="text-left text-sm font-medium text-muted-foreground hover:text-foreground py-2 border-b border-border transition-colors">
+              
                   {link.label}
                 </button>
-              ))}
+            )}
               <Button onClick={() => scrollTo("#kontakt")} className="mt-2 bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold">
                 Angebot anfragen
               </Button>
             </nav>
           </motion.div>
-        )}
+        }
       </AnimatePresence>
-    </header>
-  );
+    </header>);
+
 };
 
 export default Header;
