@@ -13,7 +13,7 @@ const Footer = () => {
               
 
               
-              <span className="font-heading font-bold text-foreground">C.O. Elektrotechnik</span>
+              <span className="font-heading font-bold text-foreground">C-O-ELEKTROTECHNIK</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Ihr verlässlicher Partner für professionelle Elektrotechnik – von der Planung bis zur Umsetzung.
