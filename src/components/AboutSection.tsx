@@ -53,8 +53,8 @@ Was ihn besonders macht? Ein klarer Blick für saubere Lösungen, viel Erfahrung
             {values.map((v, i) =>
             <div
               key={v.title}
-              className={`bg-card border border-border rounded-lg p-6 ${i === 0 ? 'border-primary/40 glow-red' : ''}`}>
-              
+              className={`bg-card border border-border rounded-lg p-6
+            >
                 <v.icon className="w-8 h-8 text-primary mb-3" />
                 <h3 className="font-heading font-semibold text-foreground mb-1">{v.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{v.desc}</p>
