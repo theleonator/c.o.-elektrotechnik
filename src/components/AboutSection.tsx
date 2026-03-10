@@ -13,7 +13,6 @@ const AboutSection = () => {
     <section id="ueber-uns" className="section-padding bg-secondary/30">
       <div className="container mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-
           {/* Text */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -27,20 +26,17 @@ const AboutSection = () => {
                 Wer wir sind
               </span>
             </div>
-
             <h2 className="text-3xl md:text-5xl font-heading font-bold mb-6">
               Über uns
             </h2>
-
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p className="text-primary-foreground bg-card text-base font-extrabold">
                 ​„Gute Elektrotechnik erkennt man daran, dass man sie im Alltag nicht bemerkt – weil einfach alles zuverlässig funktioniert."
               </p>
-
               <p>
                 Christopher Ott ist das Gesicht und der Anker hinter C-O-ELEKTROTECHNIK. Als erfahrener Elektromeister bringt er nicht nur tiefes Fachwissen, sondern auch eine große Portion Leidenschaft für gutes Handwerk mit. In den letzten Jahren war er in verschiedensten Bereichen unterwegs – vom Industriebau über Tätigkeiten für Hausverwaltungen, den Privatbereich und anspruchsvolle Neubauinstallationen bis hin zu komplexen Sanierungsprojekten.
+                Was ihn besonders macht? Ein klarer Blick für saubere Lösungen, viel Erfahrung aus der Praxis und der Anspruch, jedes Projekt zuverlässig und strukturiert ans Ziel zu bringen. Für Christopher ist Elektrotechnik nicht nur ein Beruf, sondern etwas, das man mit einer Mischung aus Präzision, Verantwortung und echtem Interesse ausführt.
               </p>
-
               <p>
                 Von der ersten Beratung bis zur finalen Abnahme stehen wir an Ihrer Seite. Transparente Preise, saubere Arbeit und zuverlässige Termine – das ist unser Versprechen an Sie.
               </p>
@@ -55,22 +51,31 @@ const AboutSection = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="grid grid-cols-2 gap-4"
           >
-            {values.map((v) => (
-              <div
+            {values.map((v, i) => (
+              <motion.div
                 key={v.title}
-                className="bg-card border border-border rounded-lg p-6"
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.4, delay: i * 0.06 }}
+                className="group bg-card border border-border rounded-lg p-6
+                           transition-all duration-300
+                           hover:border-primary/50 hover:glow-red"
               >
-                <v.icon className="w-8 h-8 text-primary mb-3" />
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-3
+                                transition-colors group-hover:bg-primary/20">
+                  <v.icon className="w-6 h-6 text-primary" />
+                </div>
+
                 <h3 className="font-heading font-semibold text-foreground mb-1">
                   {v.title}
                 </h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   {v.desc}
                 </p>
-              </div>
+              </motion.div>
             ))}
           </motion.div>
-
         </div>
       </div>
     </section>
