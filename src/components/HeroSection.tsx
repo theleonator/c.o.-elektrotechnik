@@ -38,7 +38,7 @@ const HeroSection = () => {
               & Industrieprojekte
             </h1>
 
-            <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-lg leading-relaxed">C.O. Elektrotechnik – zuverlässig, sicher, präzise. 
+            <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-lg leading-relaxed">C-O-ELEKTROTECHNIK – zuverlässig, sicher, präzise. 
 Wir bringen Strom in Ihr Projekt.
             </p>
           </motion.div>
