@@ -54,7 +54,6 @@ const Footer = () => {
               <li>Mo – Fr: 08:00 – 18:00</li>
               <li>Sa: 08:00 - 14:00</li>
               <li>So: geschlossen</li>
-</li>
             </ul>
           </div>
         </div>
