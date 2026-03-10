@@ -33,7 +33,7 @@ const AboutSection = () => {
               <p className="text-primary-foreground bg-card text-base font-extrabold">
                 ​„Gute Elektrotechnik erkennt man daran, dass man sie im Alltag nicht bemerkt – weil einfach alles zuverlässig funktioniert."
               </p>
-              <p>Christopher Ott ist das Gesicht und der Anker hinter C.O. Elektrotechnik. Als erfahrener Elektromeister bringt er nicht nur tiefes Fachwissen, sondern auch eine große Portion Leidenschaft für gutes Handwerk mit. In den letzten Jahren war er in verschiedensten Bereichen unterwegs – vom Industriebau über Tätigkeiten für Hausverwaltungen, den Privatbereich und anspruchsvolle Neubauinstallationen bis hin zu komplexen Sanierungsprojekten. 
+              <p>Christopher Ott ist das Gesicht und der Anker hinter C-O-ELEKTROTECHNIK. Als erfahrener Elektromeister bringt er nicht nur tiefes Fachwissen, sondern auch eine große Portion Leidenschaft für gutes Handwerk mit. In den letzten Jahren war er in verschiedensten Bereichen unterwegs – vom Industriebau über Tätigkeiten für Hausverwaltungen, den Privatbereich und anspruchsvolle Neubauinstallationen bis hin zu komplexen Sanierungsprojekten. 
 Was ihn besonders macht? Ein klarer Blick für saubere Lösungen, viel Erfahrung aus der Praxis und der Anspruch, jedes Projekt zuverlässig und strukturiert ans Ziel zu bringen. Für Christopher ist Elektrotechnik nicht nur ein Beruf, sondern etwas, das man mit einer Mischung aus Präzision, Verantwortung und echtem Interesse ausführt.
 
 
