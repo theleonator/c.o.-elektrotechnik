@@ -88,7 +88,7 @@ const ContactSection = () => {
               
               <label htmlFor="privacy" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
                 Ich stimme der Verarbeitung meiner Daten gemäß der{" "}
-                <a href="#datenschutz" className="text-primary hover:underline">Datenschutzerklärung</a> zu. *
+                <a href="/datenschutz.pdf" className="text-primary hover:underline">Datenschutzerklärung</a> zu. *
               </label>
             </div>
 
