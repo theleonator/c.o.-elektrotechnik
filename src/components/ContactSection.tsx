@@ -1,25 +1,65 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Send, Phone, Mail, MapPin } from "lucide-react";
+import { Send, Phone, Mail, MapPin, Loader2, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 
+const WEBHOOK_URL = "https://leonseelbach.app.n8n.cloud/webhook-test/99943df5-661f-4777-bb93-7aa512fb574e";
+
 const ContactSection = () => {
   const { toast } = useToast();
   const [agreed, setAgreed] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!agreed) {
       toast({ title: "Bitte stimmen Sie der Datenschutzerklärung zu.", variant: "destructive" });
       return;
     }
-    toast({ title: "Nachricht gesendet!", description: "Wir melden uns schnellstmöglich bei Ihnen." });
-    (e.target as HTMLFormElement).reset();
-    setAgreed(false);
+
+    setLoading(true);
+    try {
+      const response = await fetch(WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          timestamp: new Date().toISOString(),
+        }),
+      });
+
+      if (!response.ok) throw new Error("Fehler beim Senden");
+
+      setSuccess(true);
+      setFormData({ name: "", email: "", phone: "", message: "" });
+      setAgreed(false);
+    } catch {
+      toast({
+        title: "Fehler beim Senden",
+        description: "Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt per Telefon.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -47,60 +87,100 @@ const ContactSection = () => {
 
         <div className="grid lg:grid-cols-5 gap-10 lg:gap-16">
           {/* Form */}
-          <motion.form
-            onSubmit={handleSubmit}
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="lg:col-span-3 space-y-5">
-            
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div>
-                <label className="text-sm font-medium text-foreground mb-1.5 block">Name *</label>
-                <Input placeholder="Max Mustermann" required className="bg-card border-border text-foreground placeholder:text-muted-foreground" />
-              </div>
-              <div>
-                <label className="text-sm font-medium text-foreground mb-1.5 block">E-Mail *</label>
-                <Input type="email" placeholder="max@beispiel.de" required className="bg-card border-border text-foreground placeholder:text-muted-foreground" />
-              </div>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-foreground mb-1.5 block">Telefonnummer</label>
-              <Input type="tel" placeholder="+49 123 456 7890" className="bg-card border-border text-foreground placeholder:text-muted-foreground" />
-            </div>
-            <div>
-              <label className="text-sm font-medium text-foreground mb-1.5 block">Projektbeschreibung *</label>
-              <Textarea
-                placeholder="Beschreiben Sie kurz Ihr Projekt oder Anliegen..."
-                rows={5}
-                required
-                className="bg-card border-border text-foreground placeholder:text-muted-foreground resize-none" />
-              
-            </div>
+            className="lg:col-span-3">
 
-            <div className="flex items-start gap-3">
-              <Checkbox
-                id="privacy"
-                checked={agreed}
-                onCheckedChange={(v) => setAgreed(v === true)}
-                className="mt-0.5 border-muted-foreground data-[state=checked]:bg-primary data-[state=checked]:border-primary" />
-              
-              <label htmlFor="privacy" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
-                Ich stimme der Verarbeitung meiner Daten gemäß der{" "}
-                <a href="/datenschutz.pdf" className="text-primary hover:underline">Datenschutzerklärung</a> zu. *
-              </label>
-            </div>
+            {success ? (
+              <div className="flex flex-col items-center justify-center gap-4 py-16 text-center">
+                <CheckCircle className="w-16 h-16 text-primary" />
+                <h3 className="text-2xl font-heading font-bold text-foreground">Nachricht gesendet!</h3>
+                <p className="text-muted-foreground max-w-sm">
+                  Vielen Dank für Ihre Anfrage. Wir melden uns schnellstmöglich bei Ihnen.
+                </p>
+                <Button
+                  variant="outline"
+                  onClick={() => setSuccess(false)}
+                  className="mt-2 border-border font-heading font-semibold">
+                  Neue Nachricht senden
+                </Button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm font-medium text-foreground mb-1.5 block">Name *</label>
+                    <Input
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="Max Mustermann"
+                      required
+                      className="bg-card border-border text-foreground placeholder:text-muted-foreground" />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-foreground mb-1.5 block">E-Mail *</label>
+                    <Input
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="max@beispiel.de"
+                      required
+                      className="bg-card border-border text-foreground placeholder:text-muted-foreground" />
+                  </div>
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-foreground mb-1.5 block">Telefonnummer</label>
+                  <Input
+                    name="phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    placeholder="+49 123 456 7890"
+                    className="bg-card border-border text-foreground placeholder:text-muted-foreground" />
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-foreground mb-1.5 block">Projektbeschreibung *</label>
+                  <Textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Beschreiben Sie kurz Ihr Projekt oder Anliegen..."
+                    rows={5}
+                    required
+                    className="bg-card border-border text-foreground placeholder:text-muted-foreground resize-none" />
+                </div>
 
-            <Button
-              type="submit"
-              size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold px-8 py-6 glow-red">
-              
-              <Send className="w-4 h-4 mr-2" />
-              Nachricht senden
-            </Button>
-          </motion.form>
+                <div className="flex items-start gap-3">
+                  <Checkbox
+                    id="privacy"
+                    checked={agreed}
+                    onCheckedChange={(v) => setAgreed(v === true)}
+                    className="mt-0.5 border-muted-foreground data-[state=checked]:bg-primary data-[state=checked]:border-primary" />
+                  <label htmlFor="privacy" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
+                    Ich stimme der Verarbeitung meiner Daten gemäß der{" "}
+                    <a href="/datenschutz.pdf" className="text-primary hover:underline">Datenschutzerklärung</a> zu. *
+                  </label>
+                </div>
+
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  size="lg"
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold px-8 py-6 glow-red">
+                  {loading ? (
+                    <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Wird gesendet...</>
+                  ) : (
+                    <><Send className="w-4 h-4 mr-2" />Nachricht senden</>
+                  )}
+                </Button>
+              </form>
+            )}
+          </motion.div>
 
           {/* Contact Info */}
           <motion.div
