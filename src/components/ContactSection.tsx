@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Send, Phone, Mail, MapPin, Loader2, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,6 +20,15 @@ const ContactSection = () => {
     phone: "",
     message: "",
   });
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const { message } = (e as CustomEvent).detail;
+      setFormData((prev) => ({ ...prev, message }));
+    };
+    window.addEventListener("prefill-contact", handler);
+    return () => window.removeEventListener("prefill-contact", handler);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
