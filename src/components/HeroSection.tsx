@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -15,11 +15,15 @@ interface Spark {
   trail: { x: number; y: number }[];
 }
 
-const SparkCanvas = () => {
+const SparkCanvas = ({ originX, originY }: { originX: number; originY: number }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sparksRef = useRef<Spark[]>([]);
   const animFrameRef = useRef<number>(0);
-  const originRef = useRef({ x: 0, y: 0 });
+  const originRef = useRef({ x: originX, y: originY });
+
+  useEffect(() => {
+    originRef.current = { x: originX, y: originY };
+  }, [originX, originY]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -30,11 +34,6 @@ const SparkCanvas = () => {
     const resize = () => {
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
-      // Spark origin: right side, vertically centered-ish
-      originRef.current = {
-        x: canvas.width * 0.72,
-        y: canvas.height * 0.42,
-      };
     };
     resize();
     window.addEventListener("resize", resize);
@@ -124,9 +123,36 @@ const SparkCanvas = () => {
 };
 
 const HeroSection = () => {
+  const sanierungRef = useRef<HTMLSpanElement>(null);
+  const [sparkOrigin, setSparkOrigin] = useState({ x: 0, y: 0 });
+
   const scrollToContact = () => {
     document.querySelector("#kontakt")?.scrollIntoView({ behavior: "smooth" });
   };
+
+  useEffect(() => {
+    const updateOrigin = () => {
+      const span = sanierungRef.current;
+      const section = span?.closest("section");
+      if (!span || !section) return;
+      const spanRect = span.getBoundingClientRect();
+      const sectionRect = section.getBoundingClientRect();
+      // Position at the end of "Sanierung" text (after the "g")
+      setSparkOrigin({
+        x: spanRect.right - sectionRect.left,
+        y: spanRect.top - sectionRect.top + spanRect.height * 0.6,
+      });
+    };
+
+    updateOrigin();
+    window.addEventListener("resize", updateOrigin);
+    // Also update after fonts/layout settle
+    const t = setTimeout(updateOrigin, 500);
+    return () => {
+      window.removeEventListener("resize", updateOrigin);
+      clearTimeout(t);
+    };
+  }, []);
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -138,7 +164,7 @@ const HeroSection = () => {
       </div>
 
       {/* Spark Effect */}
-      <SparkCanvas />
+      {sparkOrigin.x > 0 && <SparkCanvas originX={sparkOrigin.x} originY={sparkOrigin.y} />}
 
       {/* Content */}
       <div className="relative z-20 container mx-auto px-4 pt-20">
@@ -157,7 +183,7 @@ const HeroSection = () => {
 
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-bold leading-[1.05] mb-6">
               Ihr Partner für{" "}
-              <span className="text-gradient">Neubau, Sanierung</span>{" "}
+              <span ref={sanierungRef} className="text-gradient">Neubau, Sanierung</span>{" "}
               & Industrieprojekte
             </h1>
 
