@@ -1,82 +1,152 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Calculator, ChevronRight, RotateCcw, Phone } from "lucide-react";
+import { Calculator, ChevronLeft, ChevronRight, RotateCcw, Phone, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-type Step = "type" | "details" | "result";
+type ProjectType = "sanierung" | "smarthome" | null;
+
+const STEPS = [
+  { label: "Projekttyp" },
+  { label: "Eckdaten" },
+  { label: "Maßnahmen" },
+  { label: "Ausstattung" },
+  { label: "Ergebnis" },
+];
+
+const SANIERUNG_FEATURES = [
+  { id: "zaehlerschrank", label: "Zählerschrank", desc: "Erneuerung inkl. Unterverteilung", cost: [900, 1800] as [number, number] },
+  { id: "leitungen", label: "Leitungsnetz", desc: "Neue Unterputzleitungen", cost: [15, 30] as [number, number], perM2: true },
+  { id: "steckdosen", label: "Steckdosen & Schalter", desc: "Komplette Neuinstallation", cost: [1200, 2400] as [number, number] },
+  { id: "beleuchtung", label: "Beleuchtungsanlage", desc: "Deckenauslässe & Spots", cost: [800, 1800] as [number, number] },
+  { id: "aussenanlage", label: "Außenanlage", desc: "Garten, Terrasse, Carport", cost: [600, 1400] as [number, number] },
+  { id: "wallbox", label: "Wallbox vorbereiten", desc: "Leerrohr & Absicherung", cost: [400, 900] as [number, number] },
+];
+
+const SMARTHOME_FEATURES = [
+  { id: "licht", label: "Lichtsteuerung", desc: "Dimmer, Szenen, Automatisierung", cost: [400, 900] as [number, number] },
+  { id: "rollladen", label: "Rollladensteuerung", desc: "Zeitpläne & Sonnenautomatik", cost: [500, 1000] as [number, number] },
+  { id: "heizung", label: "Heizungssteuerung", desc: "Smarte Thermostate je Raum", cost: [600, 1100] as [number, number] },
+  { id: "alarm", label: "Alarmanlage", desc: "Bewegungsmelder & Sirene", cost: [700, 1400] as [number, number] },
+  { id: "sprache", label: "Sprachsteuerung", desc: "Alexa / Google Home Integration", cost: [200, 500] as [number, number] },
+  { id: "energie", label: "Energiemessung", desc: "Verbrauchsmonitoring & Analyse", cost: [300, 700] as [number, number] },
+];
+
+const AUSSTATTUNG_OPTIONS = [
+  { id: "standard", label: "Standard", desc: "Markentechnik, solide Qualität" },
+  { id: "komfort", label: "Komfort", desc: "Hochwertige Marken, mehr Design" },
+  { id: "premium", label: "Premium", desc: "Beste Materialien, volle Flexibilität" },
+];
+
+const AUSSTATTUNG_MULTIPLIER: Record<string, number> = {
+  standard: 1.0,
+  komfort: 1.35,
+  premium: 1.7,
+};
+
+const fmt = (n: number) =>
+  n.toLocaleString("de-DE", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
+
+const SliderInput = ({
+  value, onChange, min, max, label, hint,
+}: { value: number; onChange: (v: number) => void; min: number; max: number; label: string; hint?: string }) => (
+  <div>
+    <div className="flex justify-between items-center mb-2">
+      <label className="text-sm font-medium text-foreground">{label}</label>
+      <span className="text-lg font-heading font-bold text-primary">{value}</span>
+    </div>
+    <input
+      type="range"
+      min={min}
+      max={max}
+      value={value}
+      onChange={(e) => onChange(Number(e.target.value))}
+      className="w-full accent-red-600 h-2 rounded-full cursor-pointer"
+    />
+    <div className="flex justify-between text-xs text-muted-foreground mt-1">
+      <span>{min}</span>
+      {hint && <span className="text-center text-primary/70 font-medium">{hint}</span>}
+      <span>{max}</span>
+    </div>
+  </div>
+);
 
 const CostEstimator = () => {
-  const [step, setStep] = useState<Step>("type");
-  const [projectType, setProjectType] = useState<"sanierung" | "smarthome" | null>(null);
+  const [step, setStep] = useState(0);
+  const [direction, setDirection] = useState(1);
 
-  // Sanierung state
-  const [wohnflaeche, setWohnflaeche] = useState<number | "">("");
-  const [sanierungsumfang, setSanierungsumfang] = useState<"teilsanierung" | "vollsanierung" | "">("");
-  const [zaehlerschrank, setZaehlerschrank] = useState<boolean>(false);
-
-  // Smart Home state
-  const [raeume, setRaeume] = useState<number | "">("");
-  const [smartFeatures, setSmartFeatures] = useState<string[]>([]);
+  const [projectType, setProjectType] = useState<ProjectType>(null);
+  const [wohnflaeche, setWohnflaeche] = useState(100);
+  const [currentLevel, setCurrentLevel] = useState(3);
+  const [targetLevel, setTargetLevel] = useState(7);
+  const [features, setFeatures] = useState<string[]>([]);
+  const [ausstattung, setAusstattung] = useState<string>("");
 
   const scrollToContact = () => {
     document.querySelector("#kontakt")?.scrollIntoView({ behavior: "smooth" });
   };
 
   const reset = () => {
-    setStep("type");
+    setStep(0);
     setProjectType(null);
-    setWohnflaeche("");
-    setSanierungsumfang("");
-    setZaehlerschrank(false);
-    setRaeume("");
-    setSmartFeatures([]);
+    setWohnflaeche(100);
+    setCurrentLevel(3);
+    setTargetLevel(7);
+    setFeatures([]);
+    setAusstattung("");
   };
 
-  const toggleFeature = (f: string) => {
-    setSmartFeatures((prev) =>
-      prev.includes(f) ? prev.filter((x) => x !== f) : [...prev, f]
-    );
+  const goTo = (s: number) => {
+    if (s < step) {
+      setDirection(-1);
+      setStep(s);
+    }
   };
 
-  const calcRange = (): { min: number; max: number } | null => {
-    if (projectType === "sanierung" && wohnflaeche && sanierungsumfang) {
-      const base = sanierungsumfang === "vollsanierung" ? [80, 130] : [30, 60];
-      let min = Number(wohnflaeche) * base[0];
-      let max = Number(wohnflaeche) * base[1];
-      if (zaehlerschrank) { min += 800; max += 1800; }
-      return { min, max };
-    }
-    if (projectType === "smarthome" && raeume) {
-      const featureBase: Record<string, [number, number]> = {
-        "Lichtsteuerung": [300, 600],
-        "Rollladensteuerung": [400, 800],
-        "Heizungssteuerung": [500, 900],
-        "Alarmanlage": [600, 1200],
-        "Sprachsteuerung": [200, 400],
-      };
-      let min = Number(raeume) * 200;
-      let max = Number(raeume) * 400;
-      smartFeatures.forEach((f) => {
-        if (featureBase[f]) { min += featureBase[f][0]; max += featureBase[f][1]; }
-      });
-      return { min, max };
-    }
-    return null;
+  const next = () => { setDirection(1); setStep((s) => s + 1); };
+  const prev = () => { setDirection(-1); setStep((s) => s - 1); };
+
+  const toggleFeature = (id: string) => {
+    setFeatures((prev) => prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]);
   };
 
-  const fmt = (n: number) =>
-    n.toLocaleString("de-DE", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
-
-  const range = calcRange();
-
-  const canProceed = () => {
-    if (step === "type") return !!projectType;
-    if (step === "details") {
-      if (projectType === "sanierung") return !!wohnflaeche && !!sanierungsumfang;
-      if (projectType === "smarthome") return !!raeume && smartFeatures.length > 0;
-    }
+  const canNext = () => {
+    if (step === 0) return !!projectType;
+    if (step === 1) return wohnflaeche > 0 && targetLevel > currentLevel;
+    if (step === 2) return features.length > 0;
+    if (step === 3) return !!ausstattung;
     return false;
   };
+
+  const calcRange = (): { min: number; max: number } => {
+    const mult = AUSSTATTUNG_MULTIPLIER[ausstattung] || 1;
+    const delta = Math.max(1, targetLevel - currentLevel);
+    const intensity = delta / 9;
+
+    if (projectType === "sanierung") {
+      const baseMin = wohnflaeche * (30 + intensity * 60);
+      const baseMax = wohnflaeche * (60 + intensity * 90);
+      let extraMin = 0, extraMax = 0;
+      features.forEach((id) => {
+        const f = SANIERUNG_FEATURES.find((x) => x.id === id);
+        if (f) {
+          if (f.perM2) { extraMin += f.cost[0] * wohnflaeche; extraMax += f.cost[1] * wohnflaeche; }
+          else { extraMin += f.cost[0]; extraMax += f.cost[1]; }
+        }
+      });
+      return { min: Math.round((baseMin + extraMin) * mult), max: Math.round((baseMax + extraMax) * mult) };
+    } else {
+      const baseMin = wohnflaeche * (10 + intensity * 20);
+      const baseMax = wohnflaeche * (20 + intensity * 35);
+      let extraMin = 0, extraMax = 0;
+      features.forEach((id) => {
+        const f = SMARTHOME_FEATURES.find((x) => x.id === id);
+        if (f) { extraMin += f.cost[0]; extraMax += f.cost[1]; }
+      });
+      return { min: Math.round((baseMin + extraMin) * mult), max: Math.round((baseMax + extraMax) * mult) };
+    }
+  };
+
+  const activeFeatures = projectType === "sanierung" ? SANIERUNG_FEATURES : SMARTHOME_FEATURES;
 
   return (
     <section id="kostenschaetzung" className="section-padding bg-background">
@@ -95,216 +165,251 @@ const CostEstimator = () => {
             </span>
             <div className="w-8 h-0.5 bg-primary" />
           </div>
-          <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
-            Was kostet mein Projekt?
-          </h2>
+          <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">Was kostet mein Projekt?</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
             Erhalten Sie in wenigen Klicks eine erste grobe Kostenschätzung für Ihr Vorhaben.
           </p>
         </motion.div>
 
         <div className="max-w-2xl mx-auto">
-          <div className="bg-card border border-border rounded-xl p-8">
+          <div className="bg-card border border-border rounded-xl p-6 md:p-8">
 
-            {/* Progress */}
-            <div className="flex items-center gap-2 mb-8">
-              {["type", "details", "result"].map((s, i) => (
-                <div key={s} className="flex items-center gap-2 flex-1">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${
-                    step === s ? "bg-primary text-primary-foreground" :
-                    (["type","details","result"].indexOf(step) > i) ? "bg-primary/30 text-primary" :
-                    "bg-muted text-muted-foreground"
-                  }`}>
-                    {i + 1}
+            {/* Progress Steps */}
+            <div className="flex items-center mb-8">
+              {STEPS.map((s, i) => {
+                const done = i < step;
+                const active = i === step;
+                const clickable = i < step;
+                return (
+                  <div key={i} className="flex items-center flex-1 last:flex-none">
+                    <button
+                      onClick={() => clickable ? goTo(i) : undefined}
+                      disabled={!clickable && !active}
+                      className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-200 shrink-0
+                        ${active ? "bg-primary text-primary-foreground ring-2 ring-primary/30 ring-offset-2 ring-offset-card" : ""}
+                        ${done ? "bg-primary/20 text-primary hover:bg-primary/30 cursor-pointer" : ""}
+                        ${!active && !done ? "bg-muted text-muted-foreground cursor-default" : ""}
+                      `}
+                      title={clickable ? `Zurück zu: ${s.label}` : s.label}
+                    >
+                      {done ? <Check className="w-3.5 h-3.5" /> : i + 1}
+                    </button>
+                    {i < STEPS.length - 1 && (
+                      <div className={`flex-1 h-0.5 mx-1 transition-colors ${done ? "bg-primary/40" : "bg-border"}`} />
+                    )}
                   </div>
-                  {i < 2 && <div className={`flex-1 h-0.5 transition-colors ${(["type","details","result"].indexOf(step) > i) ? "bg-primary/40" : "bg-border"}`} />}
-                </div>
-              ))}
+                );
+              })}
             </div>
 
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="wait" custom={direction}>
+              <motion.div
+                key={step}
+                custom={direction}
+                initial={{ opacity: 0, x: direction * 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: direction * -30 }}
+                transition={{ duration: 0.25 }}
+              >
 
-              {/* Step 1: Projekttyp */}
-              {step === "type" && (
-                <motion.div key="type" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-                  <h3 className="font-heading font-bold text-xl text-foreground mb-6">Was planen Sie?</h3>
-                  <div className="grid grid-cols-2 gap-4 mb-8">
-                    {[
-                      { id: "sanierung", label: "Sanierung / Altbau", desc: "Modernisierung der Elektrik im Bestandsgebäude" },
-                      { id: "smarthome", label: "Smart Home", desc: "Intelligente Gebäudetechnik nachrüsten" },
-                    ].map((t) => (
-                      <button
-                        key={t.id}
-                        onClick={() => setProjectType(t.id as any)}
-                        className={`text-left p-5 rounded-lg border-2 transition-all duration-200 ${
-                          projectType === t.id
-                            ? "border-primary bg-primary/5"
-                            : "border-border hover:border-primary/50"
-                        }`}
-                      >
-                        <p className="font-heading font-semibold text-foreground mb-1">{t.label}</p>
-                        <p className="text-xs text-muted-foreground leading-relaxed">{t.desc}</p>
-                      </button>
-                    ))}
+                {/* SCHRITT 1: Projekttyp */}
+                {step === 0 && (
+                  <div>
+                    <h3 className="font-heading font-bold text-xl text-foreground mb-2">Was planen Sie?</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Wählen Sie den Typ Ihres Projekts aus.</p>
+                    <div className="grid grid-cols-2 gap-4 mb-8">
+                      {[
+                        { id: "sanierung", label: "Sanierung / Altbau", desc: "Modernisierung der Elektrik im Bestandsgebäude – von Teilsanierung bis Kompletterneuerung." },
+                        { id: "smarthome", label: "Smart Home", desc: "Intelligente Gebäudetechnik nachrüsten – Licht, Heizung, Sicherheit auf Knopfdruck." },
+                      ].map((t) => (
+                        <button
+                          key={t.id}
+                          onClick={() => setProjectType(t.id as ProjectType)}
+                          className={`text-left p-5 rounded-lg border-2 transition-all duration-200 ${
+                            projectType === t.id ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"
+                          }`}
+                        >
+                          <p className="font-heading font-semibold text-foreground mb-1">{t.label}</p>
+                          <p className="text-xs text-muted-foreground leading-relaxed">{t.desc}</p>
+                        </button>
+                      ))}
+                    </div>
+                    <Button onClick={next} disabled={!canNext()} className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold py-6">
+                      Weiter <ChevronRight className="ml-2 w-4 h-4" />
+                    </Button>
                   </div>
-                  <Button
-                    onClick={() => setStep("details")}
-                    disabled={!canProceed()}
-                    className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold py-6"
-                  >
-                    Weiter <ChevronRight className="ml-2 w-4 h-4" />
-                  </Button>
-                </motion.div>
-              )}
+                )}
 
-              {/* Step 2: Details */}
-              {step === "details" && (
-                <motion.div key="details" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-
-                  {projectType === "sanierung" && (
-                    <>
-                      <h3 className="font-heading font-bold text-xl text-foreground mb-6">Details zur Sanierung</h3>
-                      <div className="space-y-6">
-                        <div>
-                          <label className="text-sm font-medium text-foreground mb-2 block">Wohnfläche (m²) *</label>
-                          <input
-                            type="number"
-                            min={10}
-                            max={1000}
-                            value={wohnflaeche}
-                            onChange={(e) => setWohnflaeche(e.target.value ? Number(e.target.value) : "")}
-                            placeholder="z.B. 120"
-                            className="w-full bg-background border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
-                          />
+                {/* SCHRITT 2: Eckdaten */}
+                {step === 1 && (
+                  <div>
+                    <h3 className="font-heading font-bold text-xl text-foreground mb-2">Eckdaten Ihres Projekts</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Geben Sie Größe und aktuellen Zustand an.</p>
+                    <div className="space-y-8 mb-8">
+                      <div>
+                        <div className="flex justify-between items-center mb-2">
+                          <label className="text-sm font-medium text-foreground">Wohnfläche</label>
+                          <span className="text-lg font-heading font-bold text-primary">{wohnflaeche} m²</span>
                         </div>
-                        <div>
-                          <label className="text-sm font-medium text-foreground mb-2 block">Sanierungsumfang *</label>
-                          <div className="grid grid-cols-2 gap-3">
-                            {[
-                              { id: "teilsanierung", label: "Teilsanierung", desc: "Einzelne Bereiche / Stockwerke" },
-                              { id: "vollsanierung", label: "Vollsanierung", desc: "Komplette Neuverdrahtung" },
-                            ].map((s) => (
-                              <button
-                                key={s.id}
-                                onClick={() => setSanierungsumfang(s.id as any)}
-                                className={`text-left p-4 rounded-lg border-2 transition-all ${
-                                  sanierungsumfang === s.id ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"
-                                }`}
-                              >
-                                <p className="font-semibold text-sm text-foreground">{s.label}</p>
-                                <p className="text-xs text-muted-foreground mt-0.5">{s.desc}</p>
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                        <div>
-                          <label className="text-sm font-medium text-foreground mb-2 block">Zusatzoptionen</label>
-                          <button
-                            onClick={() => setZaehlerschrank(!zaehlerschrank)}
-                            className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
-                              zaehlerschrank ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"
-                            }`}
-                          >
-                            <p className="font-semibold text-sm text-foreground">Zählerschrank erneuern</p>
-                            <p className="text-xs text-muted-foreground mt-0.5">Inkl. Unterverteilung & Absicherung</p>
-                          </button>
+                        <input
+                          type="range" min={30} max={500} step={5}
+                          value={wohnflaeche}
+                          onChange={(e) => setWohnflaeche(Number(e.target.value))}
+                          className="w-full accent-red-600 h-2 rounded-full cursor-pointer"
+                        />
+                        <div className="flex justify-between text-xs text-muted-foreground mt-1">
+                          <span>30 m²</span><span>500 m²</span>
                         </div>
                       </div>
-                    </>
-                  )}
 
-                  {projectType === "smarthome" && (
-                    <>
-                      <h3 className="font-heading font-bold text-xl text-foreground mb-6">Details zum Smart Home</h3>
-                      <div className="space-y-6">
-                        <div>
-                          <label className="text-sm font-medium text-foreground mb-2 block">Anzahl Räume *</label>
-                          <input
-                            type="number"
-                            min={1}
-                            max={20}
-                            value={raeume}
-                            onChange={(e) => setRaeume(e.target.value ? Number(e.target.value) : "")}
-                            placeholder="z.B. 5"
-                            className="w-full bg-background border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
-                          />
-                        </div>
-                        <div>
-                          <label className="text-sm font-medium text-foreground mb-2 block">Gewünschte Funktionen * (Mehrfachauswahl)</label>
-                          <div className="grid grid-cols-2 gap-3">
-                            {["Lichtsteuerung", "Rollladensteuerung", "Heizungssteuerung", "Alarmanlage", "Sprachsteuerung"].map((f) => (
-                              <button
-                                key={f}
-                                onClick={() => toggleFeature(f)}
-                                className={`text-left p-4 rounded-lg border-2 transition-all ${
-                                  smartFeatures.includes(f) ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"
-                                }`}
-                              >
-                                <p className="font-semibold text-sm text-foreground">{f}</p>
-                              </button>
-                            ))}
+                      <SliderInput
+                        label="Aktueller Modernisierungsstand"
+                        value={currentLevel}
+                        onChange={setCurrentLevel}
+                        min={1} max={10}
+                        hint={currentLevel <= 3 ? "Veraltet" : currentLevel <= 6 ? "Durchschnittlich" : "Modern"}
+                      />
+
+                      <SliderInput
+                        label="Gewünschtes Zielniveau"
+                        value={targetLevel}
+                        onChange={(v) => setTargetLevel(Math.max(currentLevel + 1, v))}
+                        min={1} max={10}
+                        hint={targetLevel <= 3 ? "Grundversorgung" : targetLevel <= 6 ? "Komfortabel" : "Hochwertig"}
+                      />
+
+                      {targetLevel <= currentLevel && (
+                        <p className="text-xs text-destructive">Das Zielniveau muss höher als der aktuelle Stand sein.</p>
+                      )}
+                    </div>
+                    <div className="flex gap-3">
+                      <Button variant="outline" onClick={prev} className="border-border font-heading font-semibold gap-1">
+                        <ChevronLeft className="w-4 h-4" /> Vorheriger Schritt
+                      </Button>
+                      <Button onClick={next} disabled={!canNext()} className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold py-6">
+                        Weiter <ChevronRight className="ml-2 w-4 h-4" />
+                      </Button>
+                    </div>
+                  </div>
+                )}
+
+                {/* SCHRITT 3: Maßnahmen */}
+                {step === 2 && (
+                  <div>
+                    <h3 className="font-heading font-bold text-xl text-foreground mb-2">
+                      {projectType === "sanierung" ? "Welche Maßnahmen sind geplant?" : "Welche Funktionen möchten Sie?"}
+                    </h3>
+                    <p className="text-sm text-muted-foreground mb-6">Mehrfachauswahl möglich.</p>
+                    <div className="grid grid-cols-2 gap-3 mb-8">
+                      {activeFeatures.map((f) => (
+                        <button
+                          key={f.id}
+                          onClick={() => toggleFeature(f.id)}
+                          className={`text-left p-4 rounded-lg border-2 transition-all duration-200 relative ${
+                            features.includes(f.id) ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"
+                          }`}
+                        >
+                          {features.includes(f.id) && (
+                            <span className="absolute top-2 right-2 w-4 h-4 bg-primary rounded-full flex items-center justify-center">
+                              <Check className="w-2.5 h-2.5 text-white" />
+                            </span>
+                          )}
+                          <p className="font-heading font-semibold text-sm text-foreground mb-0.5 pr-5">{f.label}</p>
+                          <p className="text-xs text-muted-foreground leading-relaxed">{f.desc}</p>
+                        </button>
+                      ))}
+                    </div>
+                    <div className="flex gap-3">
+                      <Button variant="outline" onClick={prev} className="border-border font-heading font-semibold gap-1">
+                        <ChevronLeft className="w-4 h-4" /> Vorheriger Schritt
+                      </Button>
+                      <Button onClick={next} disabled={!canNext()} className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold py-6">
+                        Weiter <ChevronRight className="ml-2 w-4 h-4" />
+                      </Button>
+                    </div>
+                  </div>
+                )}
+
+                {/* SCHRITT 4: Ausstattungsniveau */}
+                {step === 3 && (
+                  <div>
+                    <h3 className="font-heading font-bold text-xl text-foreground mb-2">Welches Ausstattungsniveau?</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Das beeinflusst Materialqualität und Ausführung.</p>
+                    <div className="space-y-3 mb-8">
+                      {AUSSTATTUNG_OPTIONS.map((o) => (
+                        <button
+                          key={o.id}
+                          onClick={() => setAusstattung(o.id)}
+                          className={`w-full text-left p-5 rounded-lg border-2 transition-all duration-200 flex items-center gap-4 ${
+                            ausstattung === o.id ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"
+                          }`}
+                        >
+                          <div className={`w-10 h-10 rounded-full flex items-center justify-center font-heading font-bold text-sm shrink-0 transition-colors ${
+                            ausstattung === o.id ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
+                          }`}>
+                            {o.id === "standard" ? "S" : o.id === "komfort" ? "K" : "P"}
                           </div>
-                        </div>
-                      </div>
-                    </>
-                  )}
-
-                  <div className="flex gap-3 mt-8">
-                    <Button variant="outline" onClick={() => setStep("type")} className="border-border font-heading font-semibold">
-                      Zurück
-                    </Button>
-                    <Button
-                      onClick={() => setStep("result")}
-                      disabled={!canProceed()}
-                      className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold py-6"
-                    >
-                      Schätzung berechnen <Calculator className="ml-2 w-4 h-4" />
-                    </Button>
+                          <div>
+                            <p className="font-heading font-semibold text-foreground">{o.label}</p>
+                            <p className="text-xs text-muted-foreground mt-0.5">{o.desc}</p>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                    <div className="flex gap-3">
+                      <Button variant="outline" onClick={prev} className="border-border font-heading font-semibold gap-1">
+                        <ChevronLeft className="w-4 h-4" /> Vorheriger Schritt
+                      </Button>
+                      <Button onClick={next} disabled={!canNext()} className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold py-6">
+                        Schätzung berechnen <Calculator className="ml-2 w-4 h-4" />
+                      </Button>
+                    </div>
                   </div>
-                </motion.div>
-              )}
+                )}
 
-              {/* Step 3: Ergebnis */}
-              {step === "result" && range && (
-                <motion.div key="result" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-                  <h3 className="font-heading font-bold text-xl text-foreground mb-2">Ihre grobe Kostenschätzung</h3>
-                  <p className="text-sm text-muted-foreground mb-8">Diese Schätzung dient als erste Orientierung und ersetzt kein individuelles Angebot.</p>
+                {/* SCHRITT 5: Ergebnis */}
+                {step === 4 && (
+                  <div>
+                    <h3 className="font-heading font-bold text-xl text-foreground mb-1">Ihre grobe Kostenschätzung</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Erste Orientierung – kein verbindliches Angebot.</p>
 
-                  <div className="bg-primary/5 border-2 border-primary/30 rounded-xl p-8 text-center mb-8">
-                    <p className="text-sm text-muted-foreground mb-2 uppercase tracking-widest font-heading font-semibold">Geschätzter Kostenrahmen</p>
-                    <p className="text-4xl md:text-5xl font-heading font-bold text-primary mb-1">
-                      {fmt(range.min)} – {fmt(range.max)}
-                    </p>
-                    <p className="text-xs text-muted-foreground mt-3">inkl. Material & Arbeitszeit, zzgl. MwSt.</p>
+                    <div className="bg-primary/5 border-2 border-primary/30 rounded-xl p-8 text-center mb-6">
+                      <p className="text-xs text-muted-foreground mb-2 uppercase tracking-widest font-heading font-semibold">Geschätzter Kostenrahmen</p>
+                      <p className="text-4xl md:text-5xl font-heading font-bold text-primary">
+                        {fmt(calcRange().min)} – {fmt(calcRange().max)}
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-3">inkl. Material & Arbeitszeit · zzgl. MwSt.</p>
+                    </div>
+
+                    {/* Zusammenfassung */}
+                    <div className="bg-muted/30 border border-border rounded-lg p-4 mb-6 text-sm space-y-1.5">
+                      <p className="font-heading font-semibold text-foreground mb-2 text-xs uppercase tracking-wider">Ihre Angaben</p>
+                      <div className="flex justify-between"><span className="text-muted-foreground">Projekttyp</span><span className="font-medium text-foreground">{projectType === "sanierung" ? "Sanierung / Altbau" : "Smart Home"}</span></div>
+                      <div className="flex justify-between"><span className="text-muted-foreground">Wohnfläche</span><span className="font-medium text-foreground">{wohnflaeche} m²</span></div>
+                      <div className="flex justify-between"><span className="text-muted-foreground">Modernisierungssprung</span><span className="font-medium text-foreground">Level {currentLevel} → {targetLevel}</span></div>
+                      <div className="flex justify-between"><span className="text-muted-foreground">Ausstattung</span><span className="font-medium text-foreground capitalize">{ausstattung}</span></div>
+                      <div className="flex justify-between items-start gap-4"><span className="text-muted-foreground shrink-0">Maßnahmen</span><span className="font-medium text-foreground text-right">{features.map((id) => activeFeatures.find((f) => f.id === id)?.label).join(", ")}</span></div>
+                    </div>
+
+                    <div className="bg-card border border-border rounded-lg p-4 mb-6 text-xs text-muted-foreground leading-relaxed">
+                      💡 Der tatsächliche Preis hängt von baulichen Gegebenheiten und weiteren Faktoren ab. Für ein verbindliches Angebot erstellen wir Ihnen gerne kostenlos einen Kostenvoranschlag.
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 gap-3 mb-3">
+                      <Button onClick={scrollToContact} className="bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold py-6">
+                        Angebot anfragen
+                      </Button>
+                      <Button variant="outline" className="border-border font-heading font-semibold py-6" asChild>
+                        <a href="tel:+4915157571992"><Phone className="w-4 h-4 mr-2" /> +49 151 57571992</a>
+                      </Button>
+                    </div>
+                    <button onClick={reset} className="w-full flex items-center justify-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors py-2">
+                      <RotateCcw className="w-3.5 h-3.5" /> Neue Schätzung starten
+                    </button>
                   </div>
+                )}
 
-                  <div className="bg-card border border-border rounded-lg p-5 mb-8 text-sm text-muted-foreground leading-relaxed">
-                    💡 Der tatsächliche Preis hängt von baulichen Gegebenheiten, Materialwahl und weiteren Faktoren ab. Für ein verbindliches Angebot erstellen wir Ihnen gerne kostenlos einen Kostenvoranschlag.
-                  </div>
-
-                  <div className="grid sm:grid-cols-2 gap-3">
-                    <Button
-                      onClick={scrollToContact}
-                      className="bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold py-6"
-                    >
-                      Angebot anfragen
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="border-border font-heading font-semibold py-6"
-                      asChild
-                    >
-                      <a href="tel:+4915157571992">
-                        <Phone className="w-4 h-4 mr-2" /> +49 151 57571992
-                      </a>
-                    </Button>
-                  </div>
-
-                  <button onClick={reset} className="mt-4 w-full flex items-center justify-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors py-2">
-                    <RotateCcw className="w-3.5 h-3.5" /> Neue Schätzung starten
-                  </button>
-                </motion.div>
-              )}
+              </motion.div>
             </AnimatePresence>
           </div>
         </div>
