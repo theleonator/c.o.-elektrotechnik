@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 
-const WEBHOOK_URL = "https://leonseelbach.app.n8n.cloud/webhook/99943df5-661f-4777-bb93-7aa512fb574e";
+const WEBHOOK_URL = "https://formspree.io/f/mjgaqpnw";
 
 const ContactSection = () => {
   const { toast } = useToast();
@@ -34,18 +34,21 @@ const ContactSection = () => {
 
     setLoading(true);
     try {
-      await fetch(WEBHOOK_URL, {
+      const response = await fetch(WEBHOOK_URL, {
         method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
           phone: formData.phone,
           message: formData.message,
-          timestamp: new Date().toISOString(),
         }),
       });
+
+      if (!response.ok) throw new Error("Fehler beim Senden");
 
       setSuccess(true);
       setFormData({ name: "", email: "", phone: "", message: "" });
