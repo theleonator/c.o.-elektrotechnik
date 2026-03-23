@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 type ProjectType = "sanierung" | "smarthome" | null;
 
 const STEPS = [
+  { label: "Hinweis" },
   { label: "Projekttyp" },
   { label: "Eckdaten" },
   { label: "Maßnahmen" },
@@ -110,10 +111,11 @@ const CostEstimator = () => {
   };
 
   const canNext = () => {
-    if (step === 0) return !!projectType;
-    if (step === 1) return wohnflaeche > 0 && targetLevel > currentLevel;
-    if (step === 2) return features.length > 0;
-    if (step === 3) return !!ausstattung;
+    if (step === 0) return true;
+    if (step === 1) return !!projectType;
+    if (step === 2) return wohnflaeche > 0 && targetLevel > currentLevel;
+    if (step === 3) return features.length > 0;
+    if (step === 4) return !!ausstattung;
     return false;
   };
 
@@ -212,8 +214,40 @@ const CostEstimator = () => {
                 transition={{ duration: 0.25 }}
               >
 
-                {/* SCHRITT 1: Projekttyp */}
+                {/* SCHRITT 1: Hinweis / Disclaimer */}
                 {step === 0 && (
+                  <div>
+                    <h3 className="font-heading font-bold text-xl text-foreground mb-2">Bevor Sie starten</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Bitte lesen Sie diesen Hinweis vor der Kostenschätzung.</p>
+
+                    <div className="border-2 border-primary/40 bg-primary/5 rounded-xl p-6 mb-6">
+                      <div className="flex gap-3 items-start mb-4">
+                        <span className="text-2xl">💡</span>
+                        <p className="font-heading font-bold text-lg text-foreground leading-snug">
+                          Diese Schätzung ist eine erste Orientierungshilfe – kein verbindliches Angebot.
+                        </p>
+                      </div>
+                      <p className="text-muted-foreground leading-relaxed mb-4">
+                        Der tatsächliche Preis hängt von baulichen Gegebenheiten, dem Zustand vorhandener Installationen,
+                        regionalen Faktoren und weiteren individuellen Aspekten Ihres Projekts ab.
+                        Die hier ermittelten Werte können daher erheblich vom tatsächlichen Aufwand abweichen.
+                      </p>
+                      <div className="border-t border-primary/20 pt-4">
+                        <p className="text-sm font-medium text-foreground">
+                          ✅ Für ein <span className="text-primary">verbindliches und kostenloses Angebot</span> erstellen wir Ihnen gerne
+                          einen individuellen Kostenvoranschlag – einfach Kontakt aufnehmen!
+                        </p>
+                      </div>
+                    </div>
+
+                    <Button onClick={next} className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold py-6">
+                      Verstanden – Schätzung starten <ChevronRight className="ml-2 w-4 h-4" />
+                    </Button>
+                  </div>
+                )}
+
+                {/* SCHRITT 2: Projekttyp */}
+                {step === 1 && (
                   <div>
                     <h3 className="font-heading font-bold text-xl text-foreground mb-2">Was planen Sie?</h3>
                     <p className="text-sm text-muted-foreground mb-6">Wählen Sie den Typ Ihres Projekts aus.</p>
@@ -240,8 +274,8 @@ const CostEstimator = () => {
                   </div>
                 )}
 
-                {/* SCHRITT 2: Eckdaten */}
-                {step === 1 && (
+                {/* SCHRITT 3: Eckdaten */}
+                {step === 2 && (
                   <div>
                     <h3 className="font-heading font-bold text-xl text-foreground mb-2">Eckdaten Ihres Projekts</h3>
                     <p className="text-sm text-muted-foreground mb-6">Geben Sie Größe und aktuellen Zustand an.</p>
@@ -293,8 +327,8 @@ const CostEstimator = () => {
                   </div>
                 )}
 
-                {/* SCHRITT 3: Maßnahmen */}
-                {step === 2 && (
+                {/* SCHRITT 4: Maßnahmen */}
+                {step === 3 && (
                   <div>
                     <h3 className="font-heading font-bold text-xl text-foreground mb-2">
                       {projectType === "sanierung" ? "Welche Maßnahmen sind geplant?" : "Welche Funktionen möchten Sie?"}
@@ -330,8 +364,8 @@ const CostEstimator = () => {
                   </div>
                 )}
 
-                {/* SCHRITT 4: Ausstattungsniveau */}
-                {step === 3 && (
+                {/* SCHRITT 5: Ausstattungsniveau */}
+                {step === 4 && (
                   <div>
                     <h3 className="font-heading font-bold text-xl text-foreground mb-2">Welches Ausstattungsniveau?</h3>
                     <p className="text-sm text-muted-foreground mb-6">Das beeinflusst Materialqualität und Ausführung.</p>
@@ -367,8 +401,8 @@ const CostEstimator = () => {
                   </div>
                 )}
 
-                {/* SCHRITT 5: Ergebnis */}
-                {step === 4 && (
+                {/* SCHRITT 6: Ergebnis */}
+                {step === 5 && (
                   <div>
                     <h3 className="font-heading font-bold text-xl text-foreground mb-1">Ihre grobe Kostenschätzung</h3>
                     <p className="text-sm text-muted-foreground mb-6">Erste Orientierung – kein verbindliches Angebot.</p>
@@ -391,8 +425,17 @@ const CostEstimator = () => {
                       <div className="flex justify-between items-start gap-4"><span className="text-muted-foreground shrink-0">Maßnahmen</span><span className="font-medium text-foreground text-right">{features.map((id) => activeFeatures.find((f) => f.id === id)?.label).join(", ")}</span></div>
                     </div>
 
-                    <div className="bg-card border border-border rounded-lg p-4 mb-6 text-xs text-muted-foreground leading-relaxed">
-                      💡 Der tatsächliche Preis hängt von baulichen Gegebenheiten und weiteren Faktoren ab. Für ein verbindliches Angebot erstellen wir Ihnen gerne kostenlos einen Kostenvoranschlag.
+                    <div className="border-2 border-primary/30 bg-primary/5 rounded-xl p-5 mb-6">
+                      <div className="flex gap-3 items-start">
+                        <span className="text-xl shrink-0">💡</span>
+                        <div>
+                          <p className="text-sm font-semibold text-foreground mb-1">Wichtiger Hinweis</p>
+                          <p className="text-sm text-muted-foreground leading-relaxed">
+                            Der tatsächliche Preis hängt von baulichen Gegebenheiten und weiteren individuellen Faktoren ab.
+                            Für ein <span className="text-primary font-semibold">verbindliches und kostenloses Angebot</span> erstellen wir Ihnen gerne einen Kostenvoranschlag.
+                          </p>
+                        </div>
+                      </div>
                     </div>
 
                     <div className="grid sm:grid-cols-2 gap-3 mb-3">
