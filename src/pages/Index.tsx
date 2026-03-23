@@ -4,9 +4,8 @@ import ServicesSection from "@/components/ServicesSection";
 import AboutSection from "@/components/AboutSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
-
-// ✅ Neu: Slider importieren
 import ReferenceSlider from "@/components/ReferenceSlider";
+import FaqSection from "@/components/FaqSection";
 
 const Index = () => {
   return (
@@ -28,6 +27,7 @@ const Index = () => {
         </section>
 
         <ContactSection />
+        <FaqSection />
       </main>
       <Footer />
     </div>
