@@ -58,7 +58,7 @@ const FaqSection = () => {
   const right = faqs.filter((_, i) => i % 2 !== 0);
 
   return (
-    <section id="faq" className="pt-16 pb-8 bg-secondary/30">
+    <section id="faq" className="pt-10 md:pt-16 pb-8 bg-secondary/30">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -88,7 +88,7 @@ const FaqSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid md:grid-cols-2 gap-x-8"
+          className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3"
         >
           <Accordion type="single" collapsible className="space-y-3">
             {left.map((faq, i) => (
