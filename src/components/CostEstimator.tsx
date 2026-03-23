@@ -82,8 +82,28 @@ const CostEstimator = () => {
   const [features, setFeatures] = useState<string[]>([]);
   const [ausstattung, setAusstattung] = useState<string>("");
 
-  const scrollToContact = () => {
-    document.querySelector("#kontakt")?.scrollIntoView({ behavior: "smooth" });
+  const scrollToContactWithData = () => {
+    const range = calcRange();
+    const featureLabels = features
+      .map((id) => activeFeatures.find((f) => f.id === id)?.label)
+      .filter(Boolean)
+      .join(", ");
+
+    const prefill = `Anfrage basierend auf Kostenschätzung:
+
+Projekttyp: ${projectType === "sanierung" ? "Sanierung / Altbau" : "Smart Home"}
+Wohnfläche: ${wohnflaeche} m²
+Modernisierungssprung: Level ${currentLevel} → ${targetLevel}
+Ausstattungsniveau: ${ausstattung.charAt(0).toUpperCase() + ausstattung.slice(1)}
+Geplante Maßnahmen: ${featureLabels}
+Geschätzter Kostenrahmen: ${fmt(range.min)} – ${fmt(range.max)} (zzgl. MwSt.)
+
+Ich würde gerne ein verbindliches Angebot erhalten.`;
+
+    window.dispatchEvent(new CustomEvent("prefill-contact", { detail: { message: prefill } }));
+    setTimeout(() => {
+      document.querySelector("#kontakt")?.scrollIntoView({ behavior: "smooth" });
+    }, 50);
   };
 
   const reset = () => {
@@ -439,7 +459,7 @@ const CostEstimator = () => {
                     </div>
 
                     <div className="grid sm:grid-cols-2 gap-3 mb-3">
-                      <Button onClick={scrollToContact} className="bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold py-6">
+                      <Button onClick={scrollToContactWithData} className="bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold py-6">
                         Angebot anfragen
                       </Button>
                       <Button variant="outline" className="border-border font-heading font-semibold py-6" asChild>
