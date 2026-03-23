@@ -193,8 +193,8 @@ Ich würde gerne ein verbindliches Angebot erhalten.`;
           </p>
         </motion.div>
 
-        <div className="max-w-2xl mx-auto">
-          <div className="bg-card border border-border rounded-xl p-6 md:p-8">
+        <div className="max-w-5xl mx-auto">
+          <div className="bg-card border border-border rounded-xl p-6 md:p-10">
 
             {/* Progress Steps */}
             <div className="flex items-center mb-8">
@@ -271,7 +271,7 @@ Ich würde gerne ein verbindliches Angebot erhalten.`;
                   <div>
                     <h3 className="font-heading font-bold text-xl text-foreground mb-2">Was planen Sie?</h3>
                     <p className="text-sm text-muted-foreground mb-6">Wählen Sie den Typ Ihres Projekts aus.</p>
-                    <div className="grid grid-cols-2 gap-4 mb-8">
+                    <div className="grid grid-cols-2 gap-6 mb-8">
                       {[
                         { id: "sanierung", label: "Sanierung / Altbau", desc: "Modernisierung der Elektrik im Bestandsgebäude – von Teilsanierung bis Kompletterneuerung." },
                         { id: "smarthome", label: "Smart Home", desc: "Intelligente Gebäudetechnik nachrüsten – Licht, Heizung, Sicherheit auf Knopfdruck." },
@@ -354,7 +354,7 @@ Ich würde gerne ein verbindliches Angebot erhalten.`;
                       {projectType === "sanierung" ? "Welche Maßnahmen sind geplant?" : "Welche Funktionen möchten Sie?"}
                     </h3>
                     <p className="text-sm text-muted-foreground mb-6">Mehrfachauswahl möglich.</p>
-                    <div className="grid grid-cols-2 gap-3 mb-8">
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-8">
                       {activeFeatures.map((f) => (
                         <button
                           key={f.id}
@@ -389,16 +389,16 @@ Ich würde gerne ein verbindliches Angebot erhalten.`;
                   <div>
                     <h3 className="font-heading font-bold text-xl text-foreground mb-2">Welches Ausstattungsniveau?</h3>
                     <p className="text-sm text-muted-foreground mb-6">Das beeinflusst Materialqualität und Ausführung.</p>
-                    <div className="space-y-3 mb-8">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
                       {AUSSTATTUNG_OPTIONS.map((o) => (
                         <button
                           key={o.id}
                           onClick={() => setAusstattung(o.id)}
-                          className={`w-full text-left p-5 rounded-lg border-2 transition-all duration-200 flex items-center gap-4 ${
+                          className={`text-left p-5 rounded-lg border-2 transition-all duration-200 flex flex-col gap-3 h-full ${
                             ausstattung === o.id ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"
                           }`}
                         >
-                          <div className={`w-10 h-10 rounded-full flex items-center justify-center font-heading font-bold text-sm shrink-0 transition-colors ${
+                          <div className={`w-10 h-10 rounded-full flex items-center justify-center font-heading font-bold text-sm transition-colors ${
                             ausstattung === o.id ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
                           }`}>
                             {o.id === "standard" ? "S" : o.id === "komfort" ? "K" : "P"}
@@ -435,8 +435,9 @@ Ich würde gerne ein verbindliches Angebot erhalten.`;
                       <p className="text-xs text-muted-foreground mt-3">inkl. Material & Arbeitszeit · zzgl. MwSt.</p>
                     </div>
 
-                    {/* Zusammenfassung */}
-                    <div className="bg-muted/30 border border-border rounded-lg p-4 mb-6 text-sm space-y-1.5">
+                    {/* Zusammenfassung + Disclaimer nebeneinander */}
+                    <div className="grid md:grid-cols-2 gap-4 mb-6">
+                    <div className="bg-muted/30 border border-border rounded-lg p-4 text-sm space-y-1.5">
                       <p className="font-heading font-semibold text-foreground mb-2 text-xs uppercase tracking-wider">Ihre Angaben</p>
                       <div className="flex justify-between"><span className="text-muted-foreground">Projekttyp</span><span className="font-medium text-foreground">{projectType === "sanierung" ? "Sanierung / Altbau" : "Smart Home"}</span></div>
                       <div className="flex justify-between"><span className="text-muted-foreground">Wohnfläche</span><span className="font-medium text-foreground">{wohnflaeche} m²</span></div>
@@ -445,7 +446,7 @@ Ich würde gerne ein verbindliches Angebot erhalten.`;
                       <div className="flex justify-between items-start gap-4"><span className="text-muted-foreground shrink-0">Maßnahmen</span><span className="font-medium text-foreground text-right">{features.map((id) => activeFeatures.find((f) => f.id === id)?.label).join(", ")}</span></div>
                     </div>
 
-                    <div className="border-2 border-primary/30 bg-primary/5 rounded-xl p-5 mb-6">
+                    <div className="border-2 border-primary/30 bg-primary/5 rounded-xl p-5 self-start">
                       <div className="flex gap-3 items-start">
                         <span className="text-xl shrink-0">💡</span>
                         <div>
@@ -457,6 +458,7 @@ Ich würde gerne ein verbindliches Angebot erhalten.`;
                         </div>
                       </div>
                     </div>
+                    </div>{/* end grid wrapper */}
 
                     <div className="grid sm:grid-cols-2 gap-3 mb-3">
                       <Button onClick={scrollToContactWithData} className="bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold py-6">
