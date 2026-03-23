@@ -6,6 +6,7 @@ import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import ReferenceSlider from "@/components/ReferenceSlider";
 import FaqSection from "@/components/FaqSection";
+import CostEstimator from "@/components/CostEstimator";
 
 const Index = () => {
   return (
@@ -27,6 +28,7 @@ const Index = () => {
         </section>
 
         <ContactSection />
+        <CostEstimator />
         <FaqSection />
       </main>
       <Footer />
