@@ -9,7 +9,7 @@ const services = [
     title: "Neubauinstallationen",
     description: "Eine Elektroinstallation im Neubau ist weit mehr als das Verlegen von Kabeln. Sie legt die Grundlage für alles, was im Gebäude später funktionieren soll – von der Beleuchtung über Steckdosen bis hin zu Netzwerk, Smarthome und Ladeinfrastruktur.",
     whatWeDo: "C-O-ELEKTROTECHNIK begleitet Ihr Neubauprojekt von der ersten Planung bis zur finalen Abnahme. Wir stimmen uns eng mit Architekten, Bauleitung und anderen Gewerken ab, verlegen normgerechte Leitungen und installieren Verteilungen, die für die Zukunft gerüstet sind.",
-    image: "/public/newconstructioninstallations.jpg",
+    image: "/newconstructioninstallations.jpg",
     benefits: [
       "Normgerechte Ausführung nach aktuellen VDE-Vorschriften",
       "Zukunftssichere Planung für Smart Home & E-Mobilität",
@@ -22,7 +22,7 @@ const services = [
     title: "Altbau & Sanierung",
     description: "Veraltete Elektrik ist nicht nur unbequem – sie kann gefährlich sein. Überlastete Leitungen, fehlende Schutzleiter oder ein nicht mehr zeitgemäßer Zählerschrank sind häufige Probleme in Bestandsgebäuden, die dringend modernisiert werden sollten.",
     whatWeDo: "Wir analysieren den Ist-Zustand Ihrer Elektroanlage, erkennen Schwachstellen und entwickeln ein Sanierungskonzept – ob Teilsanierung einzelner Bereiche oder vollständige Neuverdrahtung. Dabei arbeiten wir so, dass der Alltag im Gebäude so wenig wie möglich beeinträchtigt wird.",
-    image: undefined,
+    image: "/renovation.jpg",
     benefits: [
       "Ehrliche Bestandsaufnahme ohne unnötige Empfehlungen",
       "Flexible Umsetzung in Phasen oder als Gesamtpaket",
@@ -35,7 +35,7 @@ const services = [
     title: "Industriemontage",
     description: "Im industriellen Umfeld zählt Präzision, Termintreue und die Fähigkeit, unter anspruchsvollen Bedingungen zuverlässig zu arbeiten. Produktionsausfälle durch Elektrofehler kosten Zeit und Geld – das wissen wir und arbeiten entsprechend.",
     whatWeDo: "Christopher Ott bringt jahrelange Erfahrung aus dem Industriebereich mit. Wir übernehmen Elektromontagen für Maschinen, Anlagen und Produktionsstätten – von der Verdrahtung einzelner Schaltschränke bis zum elektrischen Aufbau kompletter Fertigungslinien.",
-    image: undefined,
+    image: "/industrial.jpg",
     benefits: [
       "Erfahrung aus zahlreichen Industrieprojekten",
       "Zuverlässige Einhaltung enger Zeitpläne",
@@ -48,7 +48,7 @@ const services = [
     title: "Instandhaltung & Fehlersuche",
     description: "Ein Defekt in der Elektrik kann den gesamten Betrieb lahmlegen – ob zuhause oder im Gewerbebetrieb. Schnelle, kompetente Fehlersuche ist dann das Wichtigste. Herumdoktern ohne Diagnose kostet nur Zeit und Geld.",
     whatWeDo: "Wir setzen auf systematische Fehlerdiagnose statt Raten. Mit modernen Messmitteln lokalisieren wir Defekte schnell und präzise, beheben die Ursache nachhaltig und sorgen dafür, dass Ihre Anlage wieder zuverlässig läuft. Auf Wunsch auch als regelmäßige Wartung.",
-    image: undefined,
+    image: "/maintenance.jpg",
     benefits: [
       "Schnelle Reaktionszeit bei dringenden Störungen",
       "Präzise Diagnose statt Blindreparatur",
@@ -61,7 +61,7 @@ const services = [
     title: "Smart Home & Automation",
     description: "Smart Home bedeutet mehr Komfort, mehr Sicherheit und oft auch deutlich weniger Energieverbrauch. Licht, das sich automatisch anpasst, Heizungen, die vorausdenken, und Sicherheitssysteme, die Sie immer im Blick behalten – das ist modernes Wohnen.",
     whatWeDo: "Wir planen und installieren Smart-Home-Systeme, die wirklich zu Ihrem Alltag passen. Dabei sind wir herstellerunabhängig und finden die Lösung, die Ihre Anforderungen am besten erfüllt – vom einfachen Nachrüstsystem bis zur vollintegrierten KNX-Anlage.",
-    image: undefined,
+    image: "/smarthome.jpg",
     benefits: [
       "Herstellerunabhängige, individuelle Beratung",
       "Nachrüstbar auch in Bestandsgebäuden",
@@ -74,7 +74,7 @@ const services = [
     title: "Zählerschrank & Verteilerbau",
     description: "Der Zählerschrank ist das Herzstück jeder Elektroanlage. Ein veralteter oder überlasteter Verteiler ist ein häufiger Grund für Ausfälle, Sicherungsdefekte oder sogar Brandgefahr. Eine moderne Unterverteilung schützt Personen und Technik gleichermaßen.",
     whatWeDo: "Wir planen, liefern und installieren Zählerschränke und Unterverteilungen nach aktuellen Normen. Dabei berücksichtigen wir bereits heute den zukünftigen Bedarf – etwa für Wallboxen, Wärmepumpen oder Photovoltaikanlagen – und bauen Reserven ein, die spätere Erweiterungen erleichtern.",
-    image: undefined,
+    image: "/distributionboard.jpg",
     benefits: [
       "Normgerechter Aufbau nach aktueller VDE 0100",
       "Planung mit Blick auf zukünftige Erweiterungen",
@@ -87,7 +87,7 @@ const services = [
     title: "Beleuchtungstechnik",
     description: "Licht beeinflusst, wie wir uns in Räumen fühlen – und wie viel Energie wir verbrauchen. Ein durchdachtes Beleuchtungskonzept macht Räume wohnlicher, Arbeitsplätze produktiver und Außenbereiche sicherer, ohne unnötig Strom zu verschwenden.",
     whatWeDo: "Von der einfachen LED-Umrüstung bis zum individuellen Lichtkonzept für Wohn-, Gewerbe- oder Außenbereiche: Wir beraten Sie zu Leuchtmitteln, Lichtfarben und Steuerungsmöglichkeiten und setzen Ihr Wunschergebnis fachgerecht um – inkl. aller Verkabelungsarbeiten.",
-    image: undefined,
+    image: "/lighting.jpg",
     benefits: [
       "Individuelle Lichtkonzepte für jeden Bereich",
       "Deutliche Energieeinsparung durch moderne LEDs",
@@ -100,7 +100,7 @@ const services = [
     title: "Wallbox & Ladeinfrastruktur",
     description: "Elektromobilität wächst – und mit ihr der Bedarf an zuverlässiger Ladeinfrastruktur zuhause und im Gewerbe. Eine professionell installierte Wallbox lädt nicht nur schneller als eine Haushaltssteckdose, sie ist auch deutlich sicherer und langlebiger.",
     whatWeDo: "Wir übernehmen die komplette Wallbox-Installation: von der Prüfung des Hausanschlusses über die Auswahl der passenden Wallbox bis hin zur Anmeldung beim Netzbetreiber. Auf Wunsch auch mit Lastmanagement für mehrere Ladepunkte und Anbindung an eine PV-Anlage.",
-    image: undefined,
+    image: "/wallbox.jpg",
     benefits: [
       "Komplettservice inkl. Anmeldung beim Netzbetreiber",
       "Herstellerunabhängige Wallbox-Beratung",
