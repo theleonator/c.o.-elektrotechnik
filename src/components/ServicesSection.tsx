@@ -9,7 +9,7 @@ const services = [
     title: "Neubauinstallationen",
     description: "Eine Elektroinstallation im Neubau ist weit mehr als das Verlegen von Kabeln. Sie legt die Grundlage für alles, was im Gebäude später funktionieren soll – von der Beleuchtung über Steckdosen bis hin zu Netzwerk, Smarthome und Ladeinfrastruktur.",
     whatWeDo: "C-O-ELEKTROTECHNIK begleitet Ihr Neubauprojekt von der ersten Planung bis zur finalen Abnahme. Wir stimmen uns eng mit Architekten, Bauleitung und anderen Gewerken ab, verlegen normgerechte Leitungen und installieren Verteilungen, die für die Zukunft gerüstet sind.",
-    image: undefined,
+    image: "/public/newconstructioninstallations.jpg",
     benefits: [
       "Normgerechte Ausführung nach aktuellen VDE-Vorschriften",
       "Zukunftssichere Planung für Smart Home & E-Mobilität",
