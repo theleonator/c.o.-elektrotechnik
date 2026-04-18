@@ -2,7 +2,12 @@ import type { Config } from "tailwindcss";
 
 export default {
   darkMode: ["class"],
-  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
+  content: [
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -12,17 +17,28 @@ export default {
         "2xl": "1400px",
       },
     },
+
     extend: {
+      /** 
+       * TYPOGRAFIE
+       * Einheitlich Montserrat (Century-Gothic-ähnlich)
+       */
       fontFamily: {
-        heading: ['"Space Grotesk"', 'sans-serif'],
-        body: ['"Inter"', 'sans-serif'],
+        sans: ["Montserrat", "Arial", "sans-serif"],
+        heading: ["Montserrat", "Arial", "sans-serif"],
+        body: ["Montserrat", "Arial", "sans-serif"],
       },
+
+      /** 
+       * FARBEN
+       */
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -62,11 +78,19 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
       },
+
+      /** 
+       * RADII
+       */
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+
+      /** 
+       * ANIMATIONEN
+       */
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -81,6 +105,7 @@ export default {
           to: { opacity: "1", transform: "translateY(0)" },
         },
       },
+
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
@@ -88,5 +113,6 @@ export default {
       },
     },
   },
+
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;
