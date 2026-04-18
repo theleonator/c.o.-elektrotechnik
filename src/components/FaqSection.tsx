@@ -10,7 +10,7 @@ const faqs = [
   {
     question: "Was kostet eine Elektroinstallation im Neubau?",
     answer:
-      "Die Kosten hängen stark von der Größe und Ausstattung des Gebäudes ab. Als grobe Orientierung rechnet man mit 80–150 € pro m² Wohnfläche. Für ein genaues Angebot erstellen wir Ihnen gerne kostenlos einen individuellen Kostenvoranschlag – nehmen Sie einfach Kontakt über unser Kontaktformular oder telefonisch unter +49 151 57571992 auf.",
+      "Die Kosten hängen stark von der Größe und Ausstattung des Gebäudes ab. Als grobe Orientierung rechnet man mit 80–150 € pro m² Wohnfläche. Für ein genaues Angebot erstellen wir Ihnen gerne kostenlos einen individuellen Kostenvoranschlag – nehmen Sie einfach Kontakt über unser Kontaktformular oder telefonisch unter 0151-57571992 auf.",
   },
   {
     question: "Wie lange dauert eine Elektrosanierung?",
