@@ -28,7 +28,7 @@ const Header = () => {
           <img src={logo} alt="C.O. Elektrotechnik Logo" className="h-10 w-10 md:h-12 md:w-12 rounded-full object-contain" />
           <div className="flex flex-col leading-tight">
             <span className="font-heading font-bold text-sm text-foreground tracking-tight text-left md:text-xl">C-O-ELEKTROTECHNIK</span>
-            <span className="text-[10px] text-muted-foreground tracking-widest uppercase text-left md:text-sm">M.E. ​CHRISTOPHER OTT</span>
+            <span className="text-[10px] text-muted-foreground tracking-widest uppercase text-left md:text-sm">me. ​Christopher Ott</span>
           </div>
         </button>
 
