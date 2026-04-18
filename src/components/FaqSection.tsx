@@ -35,7 +35,7 @@ const faqs = [
   {
     question: "Wie schnell können Sie bei einem Defekt vor Ort sein?",
     answer:
-      "Bei dringenden Störungen reagieren wir schnellstmöglich. Rufen Sie uns direkt unter +49 151 57571992 an – wir besprechen gemeinsam die Dringlichkeit und finden einen zeitnahen Termin.",
+      "Bei dringenden Störungen reagieren wir schnellstmöglich. Rufen Sie uns direkt unter 0151-57571992 an – wir besprechen gemeinsam die Dringlichkeit und finden einen zeitnahen Termin.",
   },
   {
     question: "Stellen Sie nach der Arbeit einen Prüfbericht aus?",
