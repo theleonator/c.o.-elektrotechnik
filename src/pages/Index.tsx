@@ -30,9 +30,10 @@ const Index = () => {
         </section>
         */}
 
-        <ContactSection />
+        {/* ✅ Gewünschte Reihenfolge */}
         <CostEstimator />
         <FaqSection />
+        <ContactSection />
       </main>
 
       <Footer />
