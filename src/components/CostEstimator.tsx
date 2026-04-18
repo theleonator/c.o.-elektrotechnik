@@ -96,7 +96,7 @@ Wohnfläche: ${wohnflaeche} m²
 Modernisierungssprung: Level ${currentLevel} → ${targetLevel}
 Ausstattungsniveau: ${ausstattung.charAt(0).toUpperCase() + ausstattung.slice(1)}
 Geplante Maßnahmen: ${featureLabels}
-Geschätzter Kostenrahmen: ${fmt(range.min)} – ${fmt(range.max)} (zzgl. MwSt.)
+Geschätzter Kostenrahmen: ${fmt(range.min)} – ${fmt(range.max)}
 
 Ich würde gerne ein verbindliches Angebot erhalten.`;
 
