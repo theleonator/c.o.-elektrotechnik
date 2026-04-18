@@ -91,7 +91,7 @@ const Footer = () => {
         {/* Bottom */}
         <div className="border-t border-border mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-muted-foreground">
-            © {year} C.O. Elektrotechnik. Alle Rechte vorbehalten.
+            © {year} C-O-Elektrotechnik. Alle Rechte vorbehalten.
           </p>
           <div className="flex gap-6 text-xs text-muted-foreground">
             <a
