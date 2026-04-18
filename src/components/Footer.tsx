@@ -51,7 +51,7 @@ const Footer = () => {
           <div>
             <h4 className="font-heading font-semibold text-foreground mb-4">Öffnungszeiten</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>Mo – Fr: 08:00 – 18:00 Uhr</li>
+              <li>Mo - Fr: 08:00 - 18:00 Uhr</li>
               <li>Sa: 08:00 - 14:00 Uhr</li>
               <li>So: geschlossen</li>
             </ul>
