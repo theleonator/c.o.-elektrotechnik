@@ -45,7 +45,7 @@ const Footer = () => {
                   className="hover:text-primary transition-colors"
                   href="tel:+491517571992"
                 >
-                  0151&nbsp;57571992
+                  0151-57571992
                 </a>
               </li>
               <li>
