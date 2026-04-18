@@ -429,9 +429,16 @@ Ich würde gerne ein verbindliches Angebot erhalten.`;
 
                     <div className="bg-primary/5 border-2 border-primary/30 rounded-xl p-8 text-center mb-6">
                       <p className="text-xs text-muted-foreground mb-2 uppercase tracking-widest font-heading font-semibold">Geschätzter Kostenrahmen inkl. Material und Arbeitszeit</p>
-                      <p className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-primary">
-                        {fmt(calcRange().min)} – {fmt(calcRange().max)}
-                      </p>
+                      
+<p className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-primary flex flex-col sm:flex-row sm:items-end sm:justify-center gap-2">
+  <span>
+    {fmt(calcRange().min)} – {fmt(calcRange().max)}
+  </span>
+  <span className="text-sm sm:text-base font-medium text-primary/80">
+    inkl. MwSt.
+  </span>
+</p>
+
                     </div>
 
                     {/* Zusammenfassung + Disclaimer nebeneinander */}
