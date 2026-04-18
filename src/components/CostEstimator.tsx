@@ -432,7 +432,7 @@ Ich würde gerne ein verbindliches Angebot erhalten.`;
                       <p className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-primary">
                         {fmt(calcRange().min)} – {fmt(calcRange().max)}
                       </p>
-                      <p className="text-xs text-muted-foreground mt-3">inkl. Material & Arbeitszeit · zzgl. MwSt.</p>
+                      <p className="text-xs text-muted-foreground mt-3">inkl. Material & Arbeitszeit</p>
                     </div>
 
                     {/* Zusammenfassung + Disclaimer nebeneinander */}
@@ -465,7 +465,7 @@ Ich würde gerne ein verbindliches Angebot erhalten.`;
                         Angebot anfragen
                       </Button>
                       <Button variant="outline" className="border-border font-heading font-semibold py-6" asChild>
-                        <a href="tel:+4915157571992"><Phone className="w-4 h-4 mr-2" /> +49 151 57571992</a>
+                        <a href="tel:+4915157571992"><Phone className="w-4 h-4 mr-2" />0151-57571992</a>
                       </Button>
                     </div>
                     <button onClick={reset} className="w-full flex items-center justify-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors py-2">
