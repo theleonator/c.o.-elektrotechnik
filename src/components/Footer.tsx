@@ -39,7 +39,7 @@ const Footer = () => {
               <li>Obere Weinbergstraße 27</li>
               <li>65326 Aarbergen</li>
               <li className="pt-1">
-                <a className="hover:text-primary transition-colors" href="tel:+491517571992">+49 151 57571992</a>
+                <a className="hover:text-primary transition-colors" href="tel:+491517571992">0151-57571992</a>
               </li>
               <li>
                 <a className="hover:text-primary transition-colors" href="mailto:mail@c-o-elektrotechnik.de">mail@c-o-elektrotechnik.de</a>
