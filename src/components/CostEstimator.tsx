@@ -428,11 +428,10 @@ Ich würde gerne ein verbindliches Angebot erhalten.`;
                     <p className="text-sm text-muted-foreground mb-6">Erste Orientierung – kein verbindliches Angebot.</p>
 
                     <div className="bg-primary/5 border-2 border-primary/30 rounded-xl p-8 text-center mb-6">
-                      <p className="text-xs text-muted-foreground mb-2 uppercase tracking-widest font-heading font-semibold">Geschätzter Kostenrahmen</p>
+                      <p className="text-xs text-muted-foreground mb-2 uppercase tracking-widest font-heading font-semibold">Geschätzter Kostenrahmen inkl. Material und Arbeitszeit</p>
                       <p className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-primary">
                         {fmt(calcRange().min)} – {fmt(calcRange().max)}
                       </p>
-                      <p className="text-xs text-muted-foreground mt-3">inkl. Material & Arbeitszeit</p>
                     </div>
 
                     {/* Zusammenfassung + Disclaimer nebeneinander */}
