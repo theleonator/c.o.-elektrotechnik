@@ -43,7 +43,7 @@ const Footer = () => {
               <li className="pt-1">
                 <a
                   className="hover:text-primary transition-colors"
-                  href="tel:+491517571992"
+                  href="tel:+4915157571992"
                 >
                   0151-57571992
                 </a>
