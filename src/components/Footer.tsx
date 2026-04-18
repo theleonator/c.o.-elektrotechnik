@@ -67,22 +67,22 @@ const Footer = () => {
 
             <ul className="text-sm text-muted-foreground space-y-3">
               <li className="flex flex-col sm:flex-row sm:gap-4">
-                <span className="font-medium sm:w-24">Mo – Fr</span>
+                <span className="font-medium sm:w-24">Mo – Fr:</span>
                 <span className="tabular-nums">
                   08:00 – 18:00 Uhr
                 </span>
               </li>
 
               <li className="flex flex-col sm:flex-row sm:gap-4">
-                <span className="font-medium sm:w-24">Sa</span>
+                <span className="font-medium sm:w-24">Sa:</span>
                 <span className="tabular-nums">
                   08:00 – 14:00 Uhr
                 </span>
               </li>
 
               <li className="flex flex-col sm:flex-row sm:gap-4">
-                <span className="font-medium sm:w-24">So</span>
-                <span className="italic">geschlossen</span>
+                <span className="font-medium sm:w-24">So:</span>
+                <span>geschlossen</span>
               </li>
             </ul>
           </div>
