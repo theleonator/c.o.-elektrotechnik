@@ -48,15 +48,28 @@ const Footer = () => {
           </div>
 
           {/* Öffnungszeiten */}
-          <div>
-            <h4 className="font-heading font-semibold text-foreground mb-4">Öffnungszeiten</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>Mo - Fr: 08:00 - 18:00 Uhr</li>
-              <li>Sa: 08:00 - 14:00 Uhr</li>
-              <li>So: geschlossen</li>
-            </ul>
-          </div>
-        </div>
+<div>
+  <h4 className="font-heading font-semibold text-foreground mb-4">
+    Öffnungszeiten
+  </h4>
+
+  <ul className="text-sm text-muted-foreground space-y-3">
+    <li className="grid grid-cols-1 sm:grid-cols-[90px_1fr] sm:gap-4">
+      <span className="font-medium">Mo – Fr</span>
+      <span className="tabular-nums">08:00 – 18:00 Uhr</span>
+    </li>
+
+    <li className="grid grid-cols-1 sm:grid-cols-[90px_1fr] sm:gap-4">
+      <span className="font-medium">Sa</span>
+      <span className="tabular-nums">08:00 – 14:00 Uhr</span>
+    </li>
+
+    <li className="grid grid-cols-1 sm:grid-cols-[90px_1fr] sm:gap-4">
+      <span className="font-medium">So</span>
+      <span className="italic">geschlossen</span>
+    </li>
+  </ul>
+</div>
 
         {/* Bottom */}
         <div className="border-t border-border mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
