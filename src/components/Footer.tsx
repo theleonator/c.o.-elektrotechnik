@@ -13,7 +13,7 @@ const Footer = () => {
               </span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Ihr verlässlicher Partner für professionelle Elektrotechnik – von
+              C-O-Elektrotechnik ist Ihr verlässlicher Partner für professionelle Elektrotechnik – von
               der Planung bis zur Umsetzung.
             </p>
           </div>
